@@ -1,2 +1,2 @@
 # CarRental
-project of car rental @Beta
+project of car rental
