@@ -7,19 +7,14 @@ using static System.Console;
 
 namespace Cars_Rental
 {
-    class Home
-    {
-        public void Home_print()
-        {
-            WriteLine("hi");
-        }
-        
-    }
     class Program
     {
         static void Main(string[] args)
         {
-
+            WriteLine("# Cars Rental #\n");
+            Home home = new Home();
+            home.Show();
+            home.Close();
             ReadKey();
         }
     }

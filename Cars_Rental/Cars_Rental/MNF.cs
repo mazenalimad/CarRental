@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Console;
 
 namespace Cars_Rental
 {
     class MNF
     {
-        public int Id { get; }
-        public string brand;
-
-
-
-
+        public int ID { get; }
+        protected MNF()
+        {
+            ID = 5; //will extract from database
+        }
+        public string Brand { set; get; }
     }
 }
