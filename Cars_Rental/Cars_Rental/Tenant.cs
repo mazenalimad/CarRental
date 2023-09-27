@@ -7,12 +7,12 @@ using static System.Console;
 
 namespace Cars_Rental
 {
-    class MNF
+    class Tenant
     {
-        public int Id { get; }
-        public string brand;
-
-
+        public int ID { get; }
+        public string Name { set; get; }
+       public Cars Cartype=new Cars();
+        public int driver_licence { get; set; }
 
 
     }

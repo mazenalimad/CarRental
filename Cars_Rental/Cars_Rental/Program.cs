@@ -19,7 +19,7 @@ namespace Cars_Rental
     {
         static void Main(string[] args)
         {
-            Cars n = new Cars();
+
             ReadKey();
         }
     }
