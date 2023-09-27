@@ -7,21 +7,26 @@ using static System.Console;
 
 namespace Cars_Rental
 {
-    class Home
+    class Home : Console_Print
     {
-        private string str = "/c CLS";
-        private void Inquire_button()
+        private void Print()
         {
+            //the label what we want to print in console
             WriteLine("1- Inquire about");
-        }
-        private void Login_button()
-        {
             WriteLine("2- Login");
         }
         public void Show()
         {
-            Inquire_button();
-            Login_button();
+            Print(); //for print in console for home page
+        }
+        public char Press() //for choise without press enter
+        {
+            char key = ReadKey().KeyChar;
+            if(key < '1' || key > '2')
+            {
+                throw new ArgumentOutOfRangeException();//exception when enter wrong will get message fo it
+            }
+            return key;
         }
 
     }

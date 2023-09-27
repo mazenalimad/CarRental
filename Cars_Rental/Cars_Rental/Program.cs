@@ -9,12 +9,30 @@ namespace Cars_Rental
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Home_Page()
         {
             WriteLine("# Cars Rental #\n");
             Home home = new Home();
             home.Show();
-            home.Close();
+            bool test;
+            do
+            {
+                try
+                {
+                    test = false;
+                    char c = home.Press();
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    test = true;
+                    Write("\nChoise Again : ");
+                }
+            } while (test);
+        }
+
+        static void Main(string[] args)
+        {
+            Home_Page();
             ReadKey();
         }
     }
