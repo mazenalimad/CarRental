@@ -7,15 +7,12 @@ using static System.Console;
 
 namespace Cars_Rental
 {
-    class Home : Console_Print
+    class Inquire_About : Console_Print
     {
         private void Print()
         {
-            WriteLine("# Cars Rental #\n");
             //the label what we want to print in console
-            WriteLine("1- Inquire about");
-            WriteLine("2- Login");
-            WriteLine("3- Exit");
+            WriteLine("- Press \"Enter\" to Back");
         }
         public void Show()
         {
@@ -24,7 +21,7 @@ namespace Cars_Rental
         public char Press() //for choise without press enter
         {
             char key = Press_check();
-            if(key < '1' || key > '3')
+            if (key != 13)
             {
                 throw new ArgumentOutOfRangeException();//exception when enter wrong will get message fo it
             }

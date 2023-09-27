@@ -44,9 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cars.cs" />
+    <Compile Include="Console_Functions.cs" />
     <Compile Include="Console_Print.cs" />
     <Compile Include="Date.cs" />
     <Compile Include="Home.cs" />
+    <Compile Include="Inquire_About.cs" />
     <Compile Include="MNF.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

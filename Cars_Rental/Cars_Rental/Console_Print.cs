@@ -13,5 +13,9 @@ namespace Cars_Rental
         {
             Clear(); //for close page 
         }
+        protected char Press_check() //for choise without press enter
+        {
+            return ReadKey().KeyChar;
+        }
     }
 }
