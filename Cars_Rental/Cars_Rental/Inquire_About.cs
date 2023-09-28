@@ -11,8 +11,9 @@ namespace Cars_Rental
     {
         private void Print()
         {
+            WriteLine("# Inquire #");
             //the label what we want to print in console
-            WriteLine("- Press \"Enter\" to Back");
+            WriteLine("- Press any key to Back");
         }
 
 
@@ -25,30 +26,9 @@ namespace Cars_Rental
             while (reload)
             {
                 this.Close(); this.Print();
-                do
-                {
-                    try
-                    {
-                        test = false;
-                        key = this.Press();
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        test = true;
-                        Write("\nEnter Again to Exit : ");
-                    }
-                } while (test);
+                ReadKey();
                 reload = false;
             }
-        }
-        public char Press() //for choise without press enter
-        {
-            char key = Press_check();
-            if (key != 13)
-            {
-                throw new ArgumentOutOfRangeException();//exception when enter wrong will get message fo it
-            }
-            return key;
         }
     }
 }

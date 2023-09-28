@@ -9,7 +9,7 @@ namespace Cars_Rental
 {
     class Console_Print
     {
-        protected char key = '0'; //key for choise
+        protected char key; //key for choise
         protected bool test; //bool for if the user choise invalid can do it again
         protected bool reload = true; //for escape from stackoverflow logic error
         public void Close()
@@ -18,7 +18,7 @@ namespace Cars_Rental
         }
         protected char Press_check() //for choise without press enter
         {
-            return ReadKey().KeyChar;
+            return ReadKey(true).KeyChar;
         }
     }
 }

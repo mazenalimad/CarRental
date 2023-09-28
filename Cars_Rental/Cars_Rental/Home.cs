@@ -38,6 +38,8 @@ namespace Cars_Rental
             else if (key == '2')
             {
                 this.Close();
+                Login login = new Login();
+                login.Show();
             }
             else
             {
