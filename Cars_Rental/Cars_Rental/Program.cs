@@ -7,11 +7,12 @@ using static System.Console;
 
 namespace Cars_Rental
 {
-    class Program : Functions
+    class Program
     {
         static void Main(string[] args)
         {
-            Home_Page();
+            Home home = new Home();
+            home.Show();
         }
     }
 }

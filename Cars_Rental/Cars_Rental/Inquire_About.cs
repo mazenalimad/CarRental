@@ -14,9 +14,32 @@ namespace Cars_Rental
             //the label what we want to print in console
             WriteLine("- Press \"Enter\" to Back");
         }
+
+
         public void Show()
         {
-            Print(); //for print in console for home page
+            this.Inquire_Page();
+        }
+        private void Inquire_Page()
+        {
+            while (reload)
+            {
+                this.Close(); this.Print();
+                do
+                {
+                    try
+                    {
+                        test = false;
+                        key = this.Press();
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        test = true;
+                        Write("\nEnter Again to Exit : ");
+                    }
+                } while (test);
+                reload = false;
+            }
         }
         public char Press() //for choise without press enter
         {

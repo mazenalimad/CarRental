@@ -9,6 +9,9 @@ namespace Cars_Rental
 {
     class Console_Print
     {
+        protected char key = '0'; //key for choise
+        protected bool test; //bool for if the user choise invalid can do it again
+        protected bool reload = true; //for escape from stackoverflow logic error
         public void Close()
         {
             Clear(); //for close page 
