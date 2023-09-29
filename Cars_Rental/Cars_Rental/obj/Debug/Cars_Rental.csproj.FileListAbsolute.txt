@@ -8,3 +8,9 @@ C:\Users\mozal\Desktop\CarRental\Cars_Rental\Cars_Rental\bin\Debug\Cars_Rental.e
 C:\Users\mozal\Desktop\CarRental\Cars_Rental\Cars_Rental\obj\Debug\Cars_Rental.exe
 C:\Users\mozal\Desktop\CarRental\Cars_Rental\Cars_Rental\obj\Debug\Cars_Rental.pdb
 C:\Users\mozal\Desktop\CarRental\Cars_Rental\Cars_Rental\obj\Debug\Cars_Rental.csprojResolveAssemblyReference.cache
+C:\Users\Mazen\Desktop\prog\CarRental\Cars_Rental\Cars_Rental\bin\Debug\Cars_Rental.exe.config
+C:\Users\Mazen\Desktop\prog\CarRental\Cars_Rental\Cars_Rental\obj\Debug\Cars_Rental.exe
+C:\Users\Mazen\Desktop\prog\CarRental\Cars_Rental\Cars_Rental\obj\Debug\Cars_Rental.pdb
+C:\Users\Mazen\Desktop\prog\CarRental\Cars_Rental\Cars_Rental\bin\Debug\Cars_Rental.exe
+C:\Users\Mazen\Desktop\prog\CarRental\Cars_Rental\Cars_Rental\bin\Debug\Cars_Rental.pdb
+C:\Users\Mazen\Desktop\prog\CarRental\Cars_Rental\Cars_Rental\obj\Debug\Cars_Rental.csprojResolveAssemblyReference.cache

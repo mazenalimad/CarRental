@@ -7,13 +7,10 @@ using static System.Console;
 
 namespace Cars_Rental
 {
-    class Tenant
+   public  class Renter:Client
     {
-        public int ID { get; }
-        public string Name { set; get; }
-        public Cars Cartype=new Cars();
-        public int driver_licence { get; set; }
-
-
+        public string Payment_method { set; get; }
+        public int Cash { set; get; }
+        
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cars_Rental
 {
-    class Cars : MNF
+    public class Cars : MNF
     {
         public string Model { set; get; }
         public int Year { set; get; }

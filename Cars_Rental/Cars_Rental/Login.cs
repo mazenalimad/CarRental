@@ -7,7 +7,7 @@ using static System.Console;
 
 namespace Cars_Rental
 {
-    class Login : Console_Print
+    public class Login : Console_Print
     {
         private void Print()
         {

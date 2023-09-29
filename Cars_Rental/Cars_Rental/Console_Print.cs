@@ -7,7 +7,7 @@ using static System.Console;
 
 namespace Cars_Rental
 {
-    class Console_Print
+    public class Console_Print
     {
         protected char key; //key for choise
         protected bool test; //bool for if the user choise invalid can do it again

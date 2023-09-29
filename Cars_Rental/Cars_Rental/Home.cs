@@ -7,7 +7,7 @@ using static System.Console;
 
 namespace Cars_Rental
 {
-    class Home : Console_Print
+    public class Home : Console_Print
     {
         private void Print()
         {
@@ -57,18 +57,18 @@ namespace Cars_Rental
         {
             while (reload)//here we use it if reload is false turn of this function
             {
-                this.Close(); this.Print(); // here for clear termenal then show home page this if page reload
+                this.Close(); this.Print(); // here for clear terminal then show home page this if page reload
                 do
                 {
                     try
                     {
-                        test = false; // here we put false it's mean choise succesful
+                        test = false; // here we put false it means chosen succesfully
                         key = this.Press();
                     }
                     catch (ArgumentOutOfRangeException)
                     {
                         test = true; // Choise is invalid
-                        Write("\nChoise Again : ");
+                        Write("\nChoose Again : ");
                     }
                 } while (test);
                 this.Move();

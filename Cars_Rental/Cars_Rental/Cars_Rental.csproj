@@ -47,15 +47,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cars.cs" />
+    <Compile Include="Client.cs" />
     <Compile Include="Console_Print.cs" />
     <Compile Include="Date.cs" />
     <Compile Include="Home.cs" />
     <Compile Include="Inquire_About.cs" />
+    <Compile Include="Lessor.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="MNF.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tenant.cs" />
+    <Compile Include="Renter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
