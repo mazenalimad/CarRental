@@ -8,7 +8,7 @@ namespace Cars_Rental
 {
     public class MNF
     {
-        public  int ID { get; }
+        private  int ID { get; }
         protected MNF()
         {
             ID = 5; //will extract from database

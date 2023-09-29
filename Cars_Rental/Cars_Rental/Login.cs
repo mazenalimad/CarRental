@@ -15,6 +15,24 @@ namespace Cars_Rental
             Write("- Press \"Enter\" to start Loign or any key to Back : ");
         }
 
+        private void Checkusers(string username, string password)
+        {
+            // here for check from sql user and compaire with user enter it
+            if (username == "Admin" && password == "admin") //here just test to know login page is ready
+            {
+                Admin admin = new Admin();
+                admin.Show("Admin",212); // id will extract from sql
+            }
+            else if (username == "employees_users")
+            {
+                //employees 
+            }
+            else
+            {
+                WriteLine("\nLogin Failed...\nPress any key to retry"); //if enter invalid user or pass
+                ReadKey();
+            }
+        }
 
         public void Show()
         {
@@ -55,18 +73,8 @@ namespace Cars_Rental
                             }
                         }
                     } while (key != 13); // Stops Receving Keys Once Enter is Pressed
+                    this.Checkusers(username, password);
 
-
-                    if (username == "Admin" && password == "admin") //here just test to know login page is ready
-                    {
-                        WriteLine("\nLogin Successful");
-                        ReadKey();
-                    }
-                    else
-                    {
-                        WriteLine("\nLogin Failed...\nPress Any key to retry");
-                        ReadKey();
-                    }
                 }
                 else //here if enter any key else "Enter" stop and back to home page
                 {
