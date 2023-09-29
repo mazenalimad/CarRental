@@ -13,6 +13,8 @@ namespace Cars_Rental
         public int Price { set; get; }
         public int License_plate_num { set; get; }
         public char License_plate_ch { set; get; }
+        public Lessor lessor { set; get; }
+        public Renter renter { set; get; }
 
     }
 }

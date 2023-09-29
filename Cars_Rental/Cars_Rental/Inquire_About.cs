@@ -9,26 +9,21 @@ namespace Cars_Rental
 {
    public class Inquire_About : Console_Print
     {
-        private void Print()
+        private void Print() //print in console
         {
             WriteLine("# Inquire #");
-            //the label what we want to print in console
             WriteLine("- Press any key to Back");
         }
 
 
-        public void Show()
+        public void Show() //to access inquire_page method in class cause it's private
         {
             this.Inquire_Page();
         }
         private void Inquire_Page()
         {
-            while (reload)
-            {
-                this.Close(); this.Print();
-                ReadKey();
-                reload = false;
-            }
+                this.Close(); this.Print(); //clear everything then print information
+                ReadKey(); //wait a user enter any key to exit from inquire page
         }
     }
 }

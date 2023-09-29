@@ -18,7 +18,7 @@ namespace Cars_Rental
         }
         protected char Press_check() //for choise without press enter
         {
-            return ReadKey(true).KeyChar;
+            return ReadKey(true).KeyChar; // true here for the key entered not be written in console
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Cars_Rental
     {
         public string Payment_method { set; get; }
         public int Cash { set; get; }
-        
+        public int Driver_licence { get; set; }
+
     }
 }

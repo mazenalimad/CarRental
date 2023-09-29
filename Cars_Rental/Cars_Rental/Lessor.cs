@@ -23,7 +23,7 @@ namespace Cars_Rental
             set
             {
                 if(value==false)//the condition validates regsteration_papers
-                { throw new ArgumentOutOfRangeException()};
+                { throw new ArgumentOutOfRangeException(); }
                 valid_regstration_papers = value;
             }
         }

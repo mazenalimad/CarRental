@@ -17,37 +17,37 @@ namespace Cars_Rental
             WriteLine("2- Login");
             WriteLine("3- Exit");
         }
-        public char Press() //for choise without press enter
+        private char Press() //for choise without press enter
         {
             char key = Press_check();
             if (key < '1' || key > '3')
             {
                 throw new ArgumentOutOfRangeException();//exception when enter wrong will get message fo it
             }
-            return key;
+            return key; //return it
         }
 
-        public void Move()
+        private void Move()
         {
             if (key == '1') //here for check of choise and teleport to function of choise
             {
-                this.Close();
-                Inquire_About inquire = new Inquire_About();
-                inquire.Show();
+                this.Close(); //close home page
+                Inquire_About inquire = new Inquire_About(); //create object to access to inquire page
+                inquire.Show(); //to start show inquire page
             }
             else if (key == '2')
             {
                 this.Close();
-                Login login = new Login();
-                login.Show();
+                Login login = new Login();//create object to access to login page
+                login.Show(); //to start show login page
             }
             else
             {
-                reload = false;
+                reload = false; //exit from application
             }
         }
 
-        public void Show()
+        public void Show() //access to home page method
         {
             this.Home_Page();
         }
