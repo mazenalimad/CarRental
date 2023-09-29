@@ -17,14 +17,17 @@ namespace Cars_Rental
 
         private void Checkusers(string username, string password)
         {
+            //TODO Dalton : Compaire with user enter it then take the correct user id and send to admin.show(username,id)
             // here for check from sql user and compaire with user enter it
             if (username == "Admin" && password == "admin") //here just test to know login page is ready
-            {
+            {   
+                //Dalton : this for admin users
                 Admin admin = new Admin();
-                admin.Show("Admin",212); // id will extract from sql
+                admin.Show(username,222); // id will extract from sql
             }
-            else if (username == "employees_users")
+            else if (username == "employees_users" && password == "employees_password")
             {
+                //Dalton : this for employees users
                 //employees 
             }
             else

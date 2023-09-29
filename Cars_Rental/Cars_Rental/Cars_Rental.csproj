@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Admin.cs" />
     <Compile Include="Cars.cs" />
+    <Compile Include="Cars_List.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Console_Print.cs" />
     <Compile Include="Date.cs" />

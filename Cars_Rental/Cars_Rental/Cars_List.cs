@@ -14,22 +14,22 @@ namespace Cars_Rental
             WriteLine("# Admin #");
             WriteLine("Username : " + username);
             WriteLine("ID Account : " + id + "\n\n");
-            this.List_Print();
+            this.SQL();
             WriteLine("\n1- Add");
             WriteLine("2- Edit");
             WriteLine("3- Delete");
         }
 
-        private void List_Print()
+        private void SQL()
         {
-            //List from sql 
+            //TODO Dalton will extarct table inquire  from sql and select ID, Brand, Car Model, Year, Status, Renter name, Lessor name
         }
         private void Add()
         {
             this.Close();
             WriteLine("# Add #\n");
             Cars car = new Cars();
-            // ID set from sql last id + 1
+            // ID set from sql last id + 1 //TODO Dalton
             Write("Brand : ");
             car.Brand = ReadLine();
             Write("Model : ");
@@ -57,14 +57,16 @@ namespace Cars_Rental
             Write("Renter Driver License : ");
             car.renter.Driver_licence = Int32.Parse(ReadLine());
 
+            //TODO Dalton : Add to SQL 
+
         }
         private void Edit()
         {
-
+            //TODO Dalton : Edit from & to SQL
         }
         private void Delete()
         {
-
+            //TODO Dalton : Delete from SQl
         }
         private char Press() //for choise without press enter
         {

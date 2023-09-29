@@ -14,6 +14,7 @@ namespace Cars_Rental
         public int License_plate_no { set; get; }
         public Lessor lessor { set; get; }
         public Renter renter { set; get; }
+        public string Status { set; get; }
 
     }
 }
