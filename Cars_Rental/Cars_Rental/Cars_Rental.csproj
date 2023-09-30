@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="accessMySql.cs" />
     <Compile Include="Admin.cs" />
     <Compile Include="Cars.cs" />
     <Compile Include="Cars_List.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renter.cs" />
+    <Compile Include="usersAdminstrator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

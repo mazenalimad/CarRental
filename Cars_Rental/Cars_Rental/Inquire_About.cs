@@ -19,6 +19,7 @@ namespace Cars_Rental
         private void SQL()
         {
             //TODO Dalton will extarct table inquire from sql and select ID, Brand, Car Model, Year, Status
+
         }
 
         public void Show() //to access inquire_page method in class cause it's private
