@@ -19,6 +19,7 @@ namespace Cars_Rental
             SSN = ssn;
             Phone_num = phone;
         }
+        public override string ToString()=>$"Name: {Name,5} {SSN,5}{Phone_num,8} ";
         
 
     }

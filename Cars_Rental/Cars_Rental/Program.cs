@@ -11,7 +11,6 @@ namespace Cars_Rental
     {
         static void Main(string[] args)
         {
-
             Home home = new Home(); //create object for access to home page
             home.Show(); // go to home page
         }
