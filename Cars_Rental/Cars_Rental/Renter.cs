@@ -19,8 +19,8 @@ namespace Cars_Rental
         public Renter(string name=" ",int ssn=0,int phone=0,int driver_lice_num=0):base(name,ssn,phone) {
 
             Driver_licence = driver_lice_num;
-
         }
+        
         public int GetPayment_meth()// implmentation of Ipayment_method interface
         {
             WriteLine($"Choose the way to pay the fee please, (1) By Cash , (2) by Credit Card");

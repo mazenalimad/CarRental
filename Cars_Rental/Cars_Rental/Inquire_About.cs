@@ -13,7 +13,7 @@ namespace Cars_Rental
         {
             WriteLine("# Inquire #");
             this.SQL();
-            WriteLine("\nmnbnm,- Press any key to Back");
+            WriteLine("\n- Press any key to Back");
         }
         
         private void SQL()

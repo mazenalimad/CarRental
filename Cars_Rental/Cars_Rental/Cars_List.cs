@@ -32,10 +32,11 @@ namespace Cars_Rental
             // ID set from sql last id + 1 //TODO Dalton
             Write("Brand : ");
             car.Brand = ReadLine();
+            WriteLine("\n new : "+car.Brand);
             Write("Model : ");
             car.Model = ReadLine();
             Write("Year : ");
-            car.Year = Convert.ToInt32(ReadLine());
+            car.Year = editor(car.Year);
             Write("License Plate No. : ");
             car.License_plate_no = Convert.ToInt32(ReadLine());
             Write("Price : ");
@@ -82,9 +83,7 @@ namespace Cars_Rental
         {
             if (key == '1') //here for check of choise and teleport to function of choise
             {
-                //this.Close(); //close home page
-                //Inquire_About inquire = new Inquire_About(); //create object to access to inquire page
-                //inquire.Show(); //to start show inquire page
+                Add();
             }
             else if (key == '2')
             {

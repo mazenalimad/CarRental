@@ -53,6 +53,8 @@
     <Compile Include="Client.cs" />
     <Compile Include="Console_Print.cs" />
     <Compile Include="Date.cs" />
+    <Compile Include="Edit_info.cs" />
+    <Compile Include="Employee.cs" />
     <Compile Include="Home.cs" />
     <Compile Include="Inquire_About.cs" />
     <Compile Include="Lessor.cs" />

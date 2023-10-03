@@ -4,21 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Console;
-
 namespace Cars_Rental
 {
-    class Admin : Console_Print
+    public class Employee : Console_Print
     {
-        private void Print(string username, int id)
+        public void Show() { this.Print(); }
+        private void Print()
         {
-            WriteLine("# Admin #");
-            WriteLine("Username : " + username);
-            WriteLine("ID Account : " + id + "\n");
-            WriteLine("1- Cars");
-            WriteLine("2- Employees");
-            WriteLine("3- Back");
-        }
+            WriteLine("#EMPLOYEE#\n");
 
+            WriteLine("what do want to do?\n\n 1- Edit a Customer info 2- Delete a Customer info 3-Display Cars Status   \n");
+
+
+        }
         private char Press() //for choise without press enter
         {
             char key = Press_check();
@@ -29,36 +27,33 @@ namespace Cars_Rental
             return key; //return it
         }
 
-        private void Move(string username, int id)
+        private void Move()
         {
             if (key == '1') //here for check of choise and teleport to function of choise
             {
-                Cars_List car_list = new Cars_List();
-                car_list.Show(username,id);
+                this.Close(); //close home page
+                Edit_info e = new Edit_info();
+                e.Show();
             }
             else if (key == '2')
             {
-               // this.Close();
-               // Login login = new Login();//create object to access to login page
-               // login.Show(); //to start show login page
+                this.Close();
+
             }
-            else
+            else if (key == '3')
             {
-                reload = false; //exit from application
+                display_status();
             }
         }
-
-        public void Show(string username, int id) //access to home page method
+        private void display_status()
         {
-            this.Admin_Page(username,id);
+
         }
-
-
-        private void Admin_Page(string username, int id)
+        private void Employee_Page()
         {
             while (reload)//here we use it if reload is false turn of this function
             {
-                this.Close(); this.Print(username, id); // here for clear terminal then show home page this if page reload
+                this.Close(); this.Print(); // here for clear terminal then show home page this if page reload
                 do
                 {
                     try
@@ -70,10 +65,12 @@ namespace Cars_Rental
                     {
                         test = true; // Choise is invalid
                         Write("\nChoose Again : ");
+
                     }
                 } while (test);
-                this.Move(username,id);
+                this.Move();
             }
+
         }
     }
 }

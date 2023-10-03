@@ -68,7 +68,7 @@ namespace Cars_Rental
                     catch (ArgumentOutOfRangeException)
                     {
                         test = true; // Choise is invalid
-                        Write("\nChoose Again : ");
+                        Write("\rChoose Again : ");
                     }
                 } while (test);
                 this.Move();
