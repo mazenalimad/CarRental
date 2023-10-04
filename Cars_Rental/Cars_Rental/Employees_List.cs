@@ -7,11 +7,11 @@ using static System.Console;
 
 namespace Cars_Rental
 {
-    class Cars_List : Console_Print
+    class Employees_List : Console_Print
     {
         private void Print(string username, int id)
         {
-            WriteLine("# Admin - Cars List #");
+            WriteLine("# Admin - Employees List #");
             WriteLine("Username : " + username);
             WriteLine("ID Account : " + id + "");
             this.SQL();
@@ -29,55 +29,29 @@ namespace Cars_Rental
         {
             this.Close();
             WriteLine("# Add #\n");
-            Cars car = new Cars();
+            Employees employee = new Employees();
+            int Year = 0, Month = 0, Day = 0;
             // ID set from sql last id + 1 //TODO Dalton
-            Write("Brand : ");
-            car.Brand = ReadLine();
-            Write("Model : ");
-            car.Model = ReadLine();
-            Write("Year : ");
-            car.Year = editor(car.Year);
-            Write("\nLicense Plate No. : ");
-            car.License_plate_no = editor(car.License_plate_no);
-            Write("\nPrice : ");
-            car.Price = editor(car.Price);
-            Write("\nLessor Name : ");
-            car.lessor.Name = ReadLine();
-            Write("Lessor SSN : ");
-            car.lessor.SSN = editor(car.lessor.SSN);
-            Write("\nLessor Phone : ");
-            car.lessor.Phone_num = editor(car.lessor.Phone_num);
-            Write("\nLessor Commission : " + car.lessor.Commission_price);
-            car.lessor.Commission_price = editor(car.lessor.Commission_price);
-            Write("\nCar Status : 1-Available 2-UnAvailable ");
-            char ChooseStatus = ReadKey(true).KeyChar;
-            while(ChooseStatus < '1' || ChooseStatus > '2')
-            {
-                ChooseStatus = ReadKey(true).KeyChar;
-            }
-            if (ChooseStatus == '1')
-            {
-                car.renter.Name = "Null";
-                car.renter.SSN = 0;
-                car.renter.Phone_num = 0;
-                car.renter.Driver_licence = 0;
-            }
-            else
-            {
-                car.Status = "UnAvailable";
+            Write("Name : ");
+            employee.Name = ReadLine();
+            Write("SSN : ");
+            employee.SSN = editor(employee.SSN);
+            Write("Phone : ");
+            employee.Phone_num = editor(employee.Phone_num);
+            Write("BirthDay : ");
+            Write("\n\tYear");
+            Year = editor(Year);
+            Write("\n\tMonth");
+            Month = editor(Month);
+            Write("\n\tDay");
+            Day = editor(Day);
+            employee.BirthDay = new Date(Month, Day, Year);
 
-                Write("\nRenter Name : ");
-                car.renter.Name = ReadLine(); ;
 
-                Write("\nRenter SSN : ");
-                car.renter.SSN = editor(car.renter.SSN);
+            //HireDate dirctly to sql sysdate
 
-                Write("\nRenter Phone : ");
-                car.renter.Phone_num = editor(car.renter.Phone_num);
-
-                Write("\nRenter Driver License : ");
-                car.renter.Driver_licence = editor(car.renter.Driver_licence);
-            }
+            Write("Salary : ");
+                       
 
             //TODO Dalton : Add to SQL 
 

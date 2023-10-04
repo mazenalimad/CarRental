@@ -12,8 +12,5 @@ namespace Cars_Rental
         private string username;
         private string hash;
         private string type;
-
-
-
     }
 }

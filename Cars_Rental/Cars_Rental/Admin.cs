@@ -38,9 +38,8 @@ namespace Cars_Rental
             }
             else if (key == '2')
             {
-               // this.Close();
-               // Login login = new Login();//create object to access to login page
-               // login.Show(); //to start show login page
+                Employees_List emp_list = new Employees_List();
+                emp_list.Show(username, id);
             }
             else
             {
@@ -69,7 +68,7 @@ namespace Cars_Rental
                     catch (ArgumentOutOfRangeException)
                     {
                         test = true; // Choise is invalid
-                        Write("\nChoose Again : ");
+                        Write("\rChoose Again : ");
                     }
                 } while (test);
                 this.Move(username,id);

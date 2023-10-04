@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 using static System.Console;
 namespace Cars_Rental
 {
-    public class Employee : Console_Print
+    public class Employee_Form : Console_Print
     {
-        public void Show() { this.Print(); }
+        public void Show(string username, int id) { this.Print(); }
         private void Print()
         {
             WriteLine("#EMPLOYEE#\n");
 
             WriteLine("what do want to do?\n\n 1- Edit a Customer info 2- Delete a Customer info 3-Display Cars Status   \n");
 
-
+            ReadKey();
         }
         private char Press() //for choise without press enter
         {
@@ -33,7 +33,6 @@ namespace Cars_Rental
             {
                 this.Close(); //close home page
                 Edit_info e = new Edit_info();
-                e.Show();
             }
             else if (key == '2')
             {

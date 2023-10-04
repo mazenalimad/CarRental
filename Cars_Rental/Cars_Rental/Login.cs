@@ -27,6 +27,8 @@ namespace Cars_Rental
             }
             else if (username == "employees_users" && password == "employees_password")
             {
+                Employee_Form emp_form = new Employee_Form();
+                emp_form.Show(username, 827);
                 //Dalton : this for employees users
                 //employees 
             }

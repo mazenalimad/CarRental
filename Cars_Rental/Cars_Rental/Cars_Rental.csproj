@@ -54,7 +54,9 @@
     <Compile Include="Console_Print.cs" />
     <Compile Include="Date.cs" />
     <Compile Include="Edit_info.cs" />
-    <Compile Include="Employee.cs" />
+    <Compile Include="Employees.cs" />
+    <Compile Include="Employees_List.cs" />
+    <Compile Include="Employee_Form.cs" />
     <Compile Include="Home.cs" />
     <Compile Include="Inquire_About.cs" />
     <Compile Include="Lessor.cs" />

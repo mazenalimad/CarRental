@@ -8,7 +8,7 @@ using static System.Console;
 
 namespace Cars_Rental
 {
-    class Edit_info:Employee
+    class Edit_info:Employee_Form
     {
         private void print()
         {
