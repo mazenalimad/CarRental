@@ -8,12 +8,12 @@ using static System.Console;
 
 namespace Cars_Rental
 {
-    public class Client
+    public class Personal_Info
     {
         public string Name { set; get; }
         public int SSN { set; get; }
         public int Phone_num { set; get; }
-        public Client(string name=" ",int ssn=0,int phone=0)
+        public Personal_Info(string name=" ",int ssn=0,int phone=0)
         {
             Name = name;
             SSN = ssn;

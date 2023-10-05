@@ -14,11 +14,11 @@ namespace Cars_Rental
             WriteLine("# Admin - Employees List #");
             WriteLine("Username : " + username);
             WriteLine("ID Account : " + id + "");
-            this.SQL();
             WriteLine("\n1- Add");
-            WriteLine("2- Edit");
-            WriteLine("3- Delete");
-            WriteLine("4- Back");
+            WriteLine("2- Show");
+            WriteLine("3- Edit");
+            WriteLine("4- Delete");
+            WriteLine("5- Back");
         }
 
         private void SQL()
@@ -67,7 +67,7 @@ namespace Cars_Rental
         private char Press() //for choise without press enter
         {
             char key = Press_check();
-            if (key < '1' || key > '4')
+            if (key < '1' || key > '5')
             {
                 throw new ArgumentOutOfRangeException();//exception when enter wrong will get message fo it
             }
@@ -78,15 +78,16 @@ namespace Cars_Rental
         {
             if (key == '1') //here for check of choise and teleport to function of choise
             {
-                Add();
+                this.Add();
             }
             else if (key == '2')
             {
-                // this.Close();
-                // Login login = new Login();//create object to access to login page
-                // login.Show(); //to start show login page
+                this.SQL();
             }
             else if (key == '3')
+            {
+            }
+            else if (key == '4')
             {
             }
             else

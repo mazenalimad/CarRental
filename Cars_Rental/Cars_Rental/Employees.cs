@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cars_Rental
 {
-    class Employees : Client
+    class Employees : Personal_Info
     {
         public Date BirthDay { set; get; }
         public Date HireDate { set; get; }

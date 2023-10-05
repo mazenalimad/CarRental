@@ -11,7 +11,7 @@ namespace Cars_Rental
     {
         int GetPayment_meth();
     }
-   public  class Renter:Client,IPayment_method
+   public  class Renter:Personal_Info,IPayment_method
     {
        
         public int Cash { set; get; }

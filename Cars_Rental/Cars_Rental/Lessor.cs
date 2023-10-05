@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using static System.Console;
 namespace Cars_Rental
 {
-    public class Lessor:Client
+    public class Lessor:Personal_Info
     {
         private double commission_price=0.01;
         private bool valid_regstration_papers;
