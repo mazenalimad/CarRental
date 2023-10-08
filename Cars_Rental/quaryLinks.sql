@@ -1,12 +1,15 @@
 CREATE DATABASE IF NOT EXISTS carrental;
 
+USE carrental;
+
 CREATE TABLE IF NOT EXISTS employees (
     id INT NOT NULL UNIQUE AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     ssn INT NOT NULL,
     hire_date DATE NOT NULL,
     birthday DATE NOT NULL,
-    salary INT NOT NULL
+    salary INT NOT NULL,
+    PRIMARY KEY(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 ALTER TABLE employees AUTO_INCREMENT = 1;
@@ -14,7 +17,7 @@ ALTER TABLE employees AUTO_INCREMENT = 1;
 CREATE TABLE IF NOT EXISTS users (
     id INT NOT NULL UNIQUE AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL,
-    hash VARCHAR(50) NOT NULL,
+    hash VARCHAR(255) NOT NULL,
     type VARCHAR(10),
     employees_id INT,
     PRIMARY KEY(id),

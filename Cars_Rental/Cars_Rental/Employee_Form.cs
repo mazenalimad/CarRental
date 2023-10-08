@@ -107,11 +107,11 @@ namespace Cars_Rental
 
         public void Show(string username, int id) //access to home page method
         {
-            this.Admin_Page(username, id);
+            this.Employee_Page(username, id);
         }
 
 
-        private void Admin_Page(string username, int id)
+        private void Employee_Page(string username, int id)
         {
             while (reload)//here we use it if reload is false turn of this function
             {

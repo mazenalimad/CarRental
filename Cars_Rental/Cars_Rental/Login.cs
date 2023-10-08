@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 using static System.Console;
 
 namespace Cars_Rental
@@ -19,24 +20,55 @@ namespace Cars_Rental
         {
             //TODO Dalton : Compaire with user enter it then take the correct user id and send to admin.show(username,id)
             // here for check from sql user and compaire with user enter it
-            if (username == "Admin" && password == "admin") //here just test to know login page is ready
-            {   
-                //Dalton : this for admin users
-                Admin admin = new Admin();
-                admin.Show(username,222); // id will extract from sql
-            }
-            else if (username == "employees_users" && password == "employees_password")
-            {
-                Employee_Form emp_form = new Employee_Form();
-                emp_form.Show(username, 827);
-                //Dalton : this for employees users
-                //employees 
+            AccessMySql userDate = new AccessMySql();
+            List<List<string>> result = new List<List<string>>();
+
+
+            result = userDate.SqlQuary($"SELECT id, username, hash, type FROM users WHERE username = '{username}'");
+
+            if (result.Count > 0)
+            {    
+                if (ComputeHash(password) == result[0][2])
+                {
+                    if (result[0][3] == "Admin")
+                    {
+                        //Dalton : this for admin users
+                        Admin admin = new Admin();
+                        admin.Show(username, Convert.ToInt32(result[0][0])); // id will extract from sql
+                    }
+                    else if (result[0][3] == "Employees")
+                    {
+                        Employee_Form emp_form = new Employee_Form();
+                        emp_form.Show(username, Convert.ToInt32(result[0][0]));
+                        //Dalton : this for employees users
+                        //employees 
+                    }
+                    else
+                    {
+                        WriteLine("\nLogin Failed...\nPress any key to retry"); //if enter invalid user or pass
+                        ReadKey();
+                    }
+                }
             }
             else
             {
-                WriteLine("\nLogin Failed...\nPress any key to retry"); //if enter invalid user or pass
+                Console.WriteLine("\n\nLogin Failed: your username or Email is wrong ...\nPress any key to retry");
                 ReadKey();
             }
+        }
+
+
+        public string ComputeHash(string s)
+        {
+            var sha256 = SHA256.Create();
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(s));
+            var sb = new StringBuilder();
+
+            foreach (var item in bytes)
+            {
+                sb.Append(item.ToString("x2"));
+            }
+            return sb.ToString();
         }
 
         public void Show()
