@@ -12,6 +12,7 @@ namespace Cars_Rental
         protected char key; //key for choise
         protected bool test; //bool for if the user choise invalid can do it again
         protected bool reload = true; //for escape from stackoverflow logic error
+        protected static int useSession = 0;
         protected void Close()
         {
             Clear(); //for close page 

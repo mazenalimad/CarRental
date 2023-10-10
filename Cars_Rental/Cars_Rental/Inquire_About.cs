@@ -12,13 +12,25 @@ namespace Cars_Rental
         private void Print() //print in console
         {
             WriteLine("# Inquire #");
-            this.SQL();
+            this.ShowCarData();
             WriteLine("\n- Press any key to Back");
         }
         
-        private void SQL()
+        private void ShowCarData()
         {
             //TODO Dalton will extarct table inquire from sql and select ID, Brand, Car Model, Year, Status
+            AccessMySql userDate = new AccessMySql();
+            List<List<string>> result = new List<List<string>>();
+
+
+            result = userDate.SqlQuary($"SELECT id, brand, model, year, state from car");
+
+            foreach (var items in result)
+            {
+                foreach (var item in items)
+                    Console.Write($"{item}\t");
+                Console.Write("\n");
+            }
 
         }
 

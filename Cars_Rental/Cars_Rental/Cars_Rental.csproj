@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LibCredit">
+      <HintPath>..\..\..\..\Source\Repos\CarRental\CreditChecker\CreditChecker\bin\Debug\LibCredit.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data">
       <HintPath>..\..\..\..\Downloads\MySql.Data.dll</HintPath>
     </Reference>
@@ -50,6 +53,7 @@
     <Compile Include="Admin.cs" />
     <Compile Include="Cars.cs" />
     <Compile Include="Cars_List.cs" />
+    <Compile Include="Credit.cs" />
     <Compile Include="Personal_Info.cs" />
     <Compile Include="Console_Print.cs" />
     <Compile Include="Date.cs" />

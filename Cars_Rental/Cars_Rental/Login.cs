@@ -34,12 +34,14 @@ namespace Cars_Rental
                     {
                         //Dalton : this for admin users
                         Admin admin = new Admin();
-                        admin.Show(username, Convert.ToInt32(result[0][0])); // id will extract from sql
+                        useSession += Convert.ToInt32(result[0][0]);
+                        admin.Show(username); // id will extract from sql
                     }
                     else if (result[0][3] == "Employees")
                     {
                         Employee_Form emp_form = new Employee_Form();
-                        emp_form.Show(username, Convert.ToInt32(result[0][0]));
+                        useSession = Convert.ToInt32(result[0][0]);
+                        emp_form.Show(username);
                         //Dalton : this for employees users
                         //employees 
                     }

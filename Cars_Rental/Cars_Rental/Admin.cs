@@ -9,11 +9,11 @@ namespace Cars_Rental
 {
     class Admin : Console_Print
     {
-        private void Print(string username, int id)
+        private void Print(string username)
         {
             WriteLine("# Admin #");
             WriteLine("Username : " + username);
-            WriteLine("ID Account : " + id + "\n");
+            WriteLine("ID Account : " + useSession + "\n");
             WriteLine("1- Cars");
             WriteLine("2- Employees");
             WriteLine("3- Back");
@@ -29,35 +29,36 @@ namespace Cars_Rental
             return key; //return it
         }
 
-        private void Move(string username, int id)
+        private void Move(string username)
         {
             if (key == '1') //here for check of choise and teleport to function of choise
             {
                 Cars_List car_list = new Cars_List();
-                car_list.Show(username,id);
+                car_list.Show(username);
             }
             else if (key == '2')
             {
                 Employees_List emp_list = new Employees_List();
-                emp_list.Show(username, id);
+                emp_list.Show(username);
             }
             else
             {
+                useSession = 0;
                 reload = false; //exit from application
             }
         }
 
-        public void Show(string username, int id) //access to home page method
+        public void Show(string username) //access to home page method
         {
-            this.Admin_Page(username,id);
+            this.Admin_Page(username);
         }
 
 
-        private void Admin_Page(string username, int id)
+        private void Admin_Page(string username)
         {
             while (reload)//here we use it if reload is false turn of this function
             {
-                this.Close(); this.Print(username, id); // here for clear terminal then show home page this if page reload
+                this.Close(); this.Print(username); // here for clear terminal then show home page this if page reload
                 do
                 {
                     try
@@ -71,7 +72,7 @@ namespace Cars_Rental
                         Write("\rChoose Again : ");
                     }
                 } while (test);
-                this.Move(username,id);
+                this.Move(username);
             }
         }
     }
