@@ -14,8 +14,9 @@ namespace Cars_Rental
    public  class Renter:Personal_Info,IPayment_method
     {
        
-        public int Cash { set; get; }
+        public string payment_method { set; get; }
         public int Driver_licence { get; set; }
+        public string due_date { get; set; }
         public Renter(string name=" ",int ssn=0,int phone=0,int driver_lice_num=0):base(name,ssn,phone) {
 
             Driver_licence = driver_lice_num;
@@ -23,11 +24,11 @@ namespace Cars_Rental
         
         public int GetPayment_meth()// implmentation of Ipayment_method interface
         {
-            WriteLine($"Choose the way to pay the fee please, (1) By Cash , (2) by Credit Card");
+            Write($"\nChoose the way to pay the fee (1) By Cash , (2) by Credit Card");
             int c = Int32.Parse(ReadLine());
             while ((c < 1 || c > 2))
             {
-                WriteLine("please enter again, Choose 1 or 2 ");
+                Write("\nPlease Enter again, Choose 1 or 2 ");
                 c = Int32.Parse(ReadLine());
             }
             return c;

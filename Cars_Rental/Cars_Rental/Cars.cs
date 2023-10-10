@@ -8,6 +8,7 @@ namespace Cars_Rental
 {
     public class Cars : MNF
     {
+        public int id { set; get; }
         public string Model { set; get; }
         public int Year { set; get; }
         public int Price { set; get; }

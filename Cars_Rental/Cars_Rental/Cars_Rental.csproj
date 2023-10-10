@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LibCredit">
-      <HintPath>..\..\..\..\Source\Repos\CarRental\CreditChecker\CreditChecker\bin\Debug\LibCredit.dll</HintPath>
-    </Reference>
     <Reference Include="MySql.Data">
       <HintPath>..\..\..\..\Downloads\MySql.Data.dll</HintPath>
     </Reference>

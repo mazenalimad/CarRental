@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CreditChecker;
 using static System.Console;
 
 namespace Cars_Rental
@@ -35,11 +34,11 @@ namespace Cars_Rental
             foreach (var items in result)
             {
                 foreach (var item in items)
-                    Console.Write($"{item}\t");
-                Console.Write("\n");
+                    Write($"{item}\t");
+                Write("\n");
             }
-            Console.WriteLine("\n\n\nPress any key to go back");
-            Console.ReadKey();
+            WriteLine("\n\n\nPress any key to go back");
+            ReadKey();
         }
         private void Add()
         {
@@ -69,7 +68,7 @@ namespace Cars_Rental
             car.lessor.Valid_Regstration_Papers = car.lessor.Valid_Regstration_Papers;
             Write("\nCar Status : 1-Available 2-UnAvailable ");
             char ChooseStatus = ReadKey(true).KeyChar;
-            while(ChooseStatus < '1' || ChooseStatus > '2')
+            while (ChooseStatus < '1' || ChooseStatus > '2')
             {
                 ChooseStatus = ReadKey(true).KeyChar;
             }
@@ -95,31 +94,88 @@ namespace Cars_Rental
 
                 Write("\nRenter Driver License : ");
                 car.renter.Driver_licence = editor(car.renter.Driver_licence);
-            }
+
+                if (car.renter.GetPayment_meth() == 2)
+                {
+                    Write("\nRenter credit card number : ");
+                    if (credit((long)Convert.ToDouble(ReadLine())))
+                    {
+                        car.renter.payment_method = "credit card";
+                    }
+                }
+                else
+                {
+                    car.renter.payment_method = "Cash";
+                }
+
+                Write("\ndue_date YYYY-MM-DD : ");
+                car.renter.due_date = ReadLine();
+            } 
 
             //TODO Dalton : Add to SQL 
             AccessMySql userDate = new AccessMySql();
             List<List<string>> result = new List<List<string>>();
 
             result = userDate.SqlQuary($"INSERT INTO client (ssn, name, phone) VALUES ({car.lessor.SSN}, {car.lessor.Name}, {car.lessor.Phone_num})");
-            result = userDate.SqlQuary($"INSERT INTO lessor (commission, registation, client_id) VALUES ({car.lessor.Commission_price}, {car.lessor.Valid_Regstration_Papers}, (SELECT id FROM users WHERE ssn = {car.lessor.SSN}))");
+            result = userDate.SqlQuary($"INSERT INTO lessor (commission, registation, client_id) VALUES ({car.lessor.Commission_price}, {car.lessor.Valid_Regstration_Papers}, (SELECT id FROM client WHERE ssn = {car.lessor.SSN}))");
 
             if (ChooseStatus != '1')
             {
                 result = userDate.SqlQuary($"INSERT INTO client (ssn, name, phone) VALUES ({car.renter.SSN}, {car.renter.Name}, {car.renter.Phone_num})");
-                //result = userDate.SqlQuary($"INSERT INTO renter(payment_method, drive_licanece, received_date, due_date, clint_id, users_id) VALUES (, {useSession})");
+                result = userDate.SqlQuary($"INSERT INTO renter(payment_method, drive_licanece, received_date, due_date, clint_id, users_id) VALUES ({car.renter.payment_method}, {car.renter.Driver_licence}, NOW(), {car.renter.due_date}, (SELECT id FROM client WHERE ssn = {car.renter.SSN}), {useSession})");
             }
-            result = userDate.SqlQuary($"INSERT INTO client (ssn, name, phone) VALUES ({car.lessor.SSN}, {car.lessor.Name}, {car.lessor.Phone_num})");
+            result = userDate.SqlQuary($"INSERT INTO car (brand, model, year, plateNumber, price, state, renter_id, lessor_id) VALUES ({car.Brand}, {car.Model}, {car.Year}, {car.License_plate_no}, {car.Price}, {car.Status}, (SELECT id From renter where client_id IN (SELECT id From clinet WHERE ssn = {car.renter.SSN})),  (SELECT id From lessor where client_id IN (SELECT id From clinet WHERE ssn = {car.lessor.SSN})");
 
+
+            this.Close();
+            Write("\n\nAddition is done Successfully");
+            ReadKey();
 
         }
         private void Edit()
         {
             //TODO Dalton : Edit from & to SQL
+            this.Close();
+            WriteLine("# Edit #\n");
+            Cars car = new Cars();
+            Write("\nEnter the Car id");
+            car.id = editor(car.id);
+
+            // SQL 
+            AccessMySql userDate = new AccessMySql();
+            List<List<string>> result = new List<List<string>>();
+
+            result = userDate.SqlQuary($"SELECT car.Brand, car.model, car.year, car.plateNumber, car.price, car.state, renter.payment_method, renter.drive_licanese, renter.received_date, renter.due_date, lessor.commission, lessor.registation_paper, c1.ssn as 'lessor SSN', c1.name as 'lessor name', c1.phone as 'lessor phone', c2.ssn as 'renter SSN', c2.name as 'renter name', c2.phone as 'renter phone' FROM car INNER JOIN lessor ON lessor_id = lessor.id INNER JOIN renter ON renter_id = renter.id INNER JOIN client c1 ON lessor.client_id = c1.id INNER JOIN client c2 ON renter.client_id = c2.id WHERE car.id = {car.id}");
+
+            foreach (var items in result)
+            {
+                
+            }
+
+            Write("\n\nEdit is done Successfully");
+            ReadKey();
         }
         private void Delete()
         {
             //TODO Dalton : Delete from SQl
+            this.Close();
+            WriteLine("# Delete #\n");
+            Cars car = new Cars();
+            Write("\nEnter the Car id");
+            car.id = editor(car.id);
+
+            // SQL 
+            AccessMySql userDate = new AccessMySql();
+            List<List<string>> result = new List<List<string>>();
+
+            result = userDate.SqlQuary($"DELETE FROM client WHERE id IN (SELECT client_id FROM lessor WHERE id IN (SELECT lessor_id FROM car WHERE id = {car.id}))");
+            result = userDate.SqlQuary($"DELETE FROM lessor WHERE id IN (SELECT lessor_id FROM car WHERE id = {car.id}))");
+            result = userDate.SqlQuary($"DELETE FROM client WHERE id IN (SELECT client_id FROM renter WHERE id IN (SELECT renter_id FROM car WHERE id = {car.id}))");
+            result = userDate.SqlQuary($"DELETE FROM renter WHERE id IN (SELECT renter_id FROM car WHERE id = {car.id}))");
+            result = userDate.SqlQuary($"DELETE FROM car WHERE id = {car.id}))");
+
+            Write("\n\nDelete is done Successfully");
+            ReadKey();
         }
 
 
@@ -153,9 +209,11 @@ namespace Cars_Rental
             }
             else if (key == '3')
             {
+                this.Edit();
             }
             else if (key == '4')
             {
+                this.Delete();
             }
             else
             {
