@@ -23,17 +23,39 @@ namespace Cars_Rental
         private void SQL()
         {
             //TODO Dalton will extarct table inquire  from sql and select ID, Brand, Car Model, Year, Status, Renter name, Lessor name
+            this.Close();
+            AccessMySql userDate = new AccessMySql();
+            List<List<string>> result = new List<List<string>>();
+
+
+            result = userDate.SqlQuary($"SELECT car.id, car.Brand, car.model, car.year, car.plateNumber, car.price, car.state, c1.name as renter, c2.name as lessor FROM car INNER JOIN renter ON renter_id = renter.id INNER JOIN client c1 ON renter.client_id = c1.id INNER JOIN lessor ON lessor_id = lessor.id INNER JOIN client c2 ON lessor.client_id = c2.id");
+
+            foreach (var items in result)
+            {
+                foreach (var item in items)
+                    Write($"{item}\t");
+                Write("\n");
+            }
+            WriteLine("\n\n\nPress any key to go back");
+            ReadKey();
         }
         private void Add()
         {
             this.Close();
             WriteLine("# Add #\n");
+            Cars car = new Cars();
+            AccessMySql userDate = new AccessMySql();
+            List<List<string>> result = new List<List<string>>();
 
-            /*
             WriteLine("Enter ID of car you want add renter for it : ");
-            int ID=0;
-            ID = editor(ID);
-            if (ID == Cars.id && Cars.status == "Available") // here just example how it works
+            int id = 0;
+            id = editor(id);
+
+            result = userDate.SqlQuary($"SELECT state FROM car WHERE id = {id}");
+
+            car.Status = result[0][0];
+
+            if (car.Status == "Available") // here just example how it works
             {
                 Write("\nRenter Name : ");
                 car.renter.Name = ReadLine(); ;
@@ -44,30 +66,48 @@ namespace Cars_Rental
                 Write("\nRenter Phone : ");
                 car.renter.Phone_num = editor(car.renter.Phone_num);
 
+                if (car.renter.GetPayment_meth() == 2)
+                {
+                    Write("\nRenter credit card number : ");
+                    if (credit((long)Convert.ToDouble(ReadLine())))
+                    {
+                        car.renter.payment_method = "credit card";
+                    }
+                }
+                else
+                {
+                    car.renter.payment_method = "Cash";
+                }
+
                 Write("\nRenter Driver License : ");
                 car.renter.Driver_licence = editor(car.renter.Driver_licence);
-                
-                WriteLine("\nPress Enter to confirm.. Or any key to cancel ")
+
+
+                Write("\ndue_date YYYY-MM-DD : ");
+                car.renter.due_date = ReadLine();
+
+
+                WriteLine("\nPress Enter to confirm.. Or any key to cancel ");
                 if(ReadKey(true).KeyChar == 13)
                 {
                     //here send every new details of renter to car
-                    Cars.status = "UnAvailable";
+                    car.Status = "UnAvailable";
                 }
+
+                // TODO Dalton : Add renter to the car 
+                result = userDate.SqlQuary($"INSERT INTO client (ssn, name, phone) VALUES ({car.renter.SSN}, {car.renter.Name}, {car.renter.Phone_num}); INSERT INTO renter(payment_method, drive_licanece, received_date, due_date, clint_id, users_id) VALUES({ car.renter.payment_method}, { car.renter.Driver_licence}, NOW(), { car.renter.due_date}, (SELECT id FROM client WHERE ssn = { car.renter.SSN}), { useSession}); ");
+                result = userDate.SqlQuary($"UPDATE car SET renter_id = (SELECT id FROM renter WHERE client_id IN (SELECT id FROM client WHERE id = {car.renter.SSN})) WHERE id = {id}");
             }
             else
             {
                 WriteLine("This Car not found..Press any key to back ");
                 ReadKey();
             }
-
-            */
-
-            //TODO Dalton : Add to SQL 
-
         }
         private void Edit()
         {
             //TODO Dalton : Edit from & to SQL
+
         }
         private void Delete()
         {
@@ -103,6 +143,13 @@ namespace Cars_Rental
             {
                 reload = false; //exit from application
             }
+        }
+
+
+        private bool credit(long creditNum)
+        {
+            Credit Check = new Credit();
+            return Check.CreditNumber(creditNum);
         }
 
         public void Show(string username) //access to home page method

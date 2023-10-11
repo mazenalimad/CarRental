@@ -23,7 +23,22 @@ namespace Cars_Rental
 
         private void SQL()
         {
-            //TODO Dalton will extarct table inquire  from sql and select ID, Brand, Car Model, Year, Status, Renter name, Lessor name
+            //TODO Dalton will extarct table inquire  from sql and select ID, name, ssn, hire_date, birthday, phone, salary
+            this.Close();
+            AccessMySql userDate = new AccessMySql();
+            List<List<string>> result = new List<List<string>>();
+
+
+            result = userDate.SqlQuary($"SELECT * FROM employees");
+
+            foreach (var items in result)
+            {
+                foreach (var item in items)
+                    Write($"{item}\t");
+                Write("\n");
+            }
+            WriteLine("\n\n\nPress any key to go back");
+            ReadKey();
         }
         private void Add()
         {
@@ -51,18 +66,82 @@ namespace Cars_Rental
             //HireDate dirctly to sql sysdate
 
             Write("Salary : ");
-                       
+            employee.Salary = editor(employee.Salary);
+
 
             //TODO Dalton : Add to SQL 
+            AccessMySql userDate = new AccessMySql();
+            List<List<string>> result = new List<List<string>>();
 
+            result = userDate.SqlQuary($"INSERT INTO employees (name, ssn, hire_date, birthday, salary, phone) VALUE ({employee.Name}, {employee.SSN}, NOW(), {employee.BirthDay.Year}-{employee.BirthDay.Month}-{employee.BirthDay.Day}, {employee.Salary}, {employee.Phone_num})");
+
+            this.Close();
+            Write("\n\nAddition is done Successfully");
+            ReadKey();
         }
         private void Edit()
         {
             //TODO Dalton : Edit from & to SQL
+            this.Close();
+            WriteLine("# Edit #\n");
+            Employees employee = new Employees();
+            AccessMySql userDate = new AccessMySql();
+            List<List<string>> result = new List<List<string>>();
+
+            Write("\nEnter the Car id");
+            employee.id = editor(employee.id);
+
+            result = userDate.SqlQuary($"SELECT * FROM employees WHERE id =  {employee.id}");
+
+
+            foreach (var items in result)
+            {
+                employee.Name = items[1];
+                employee.SSN = Convert.ToInt32(items[2]);
+
+
+                // date format
+                string str = items[4];
+                char[] spearator = { '-' };
+
+                String[] strlist = str.Split(spearator);
+
+                int Year = Convert.ToInt32(strlist[0]);
+                int Month = Convert.ToInt32(strlist[1]);
+                int Day = Convert.ToInt32(strlist[2]);
+
+                employee.BirthDay = new Date(Month, Day, Year);
+
+
+                employee.Salary = Convert.ToInt32(items[5]);
+                employee.Phone_num = Convert.ToInt32(items[6]);
+            }
+
+
+            result = userDate.SqlQuary($"UPDATE employees SET name = {employee.Name}, ssn = {employee.SSN}, birthday = {employee.BirthDay.Year}-{employee.BirthDay.Month}-{employee.BirthDay.Day}, salary = {employee.Salary}, phone = {employee.Phone_num}  WHERE id =  {employee.id}");
+
+            this.Close();
+            Write("\n\nEdition is done Successfully");
+            ReadKey();
+
         }
         private void Delete()
         {
             //TODO Dalton : Delete from SQl
+            this.Close();
+            WriteLine("# Delete #\n");
+            Employees employee = new Employees();
+            AccessMySql userDate = new AccessMySql();
+            List<List<string>> result = new List<List<string>>();
+
+            Write("\nEnter the Car id");
+            employee.id = editor(employee.id);
+
+            result = userDate.SqlQuary($"DELETE FROM employees WHERE id =  {employee.id}");
+
+            this.Close();
+            Write("\n\nDelete is done Successfully");
+            ReadKey();
         }
         private char Press() //for choise without press enter
         {
@@ -86,9 +165,11 @@ namespace Cars_Rental
             }
             else if (key == '3')
             {
+                this.Edit();
             }
             else if (key == '4')
             {
+                this.Delete();
             }
             else
             {
