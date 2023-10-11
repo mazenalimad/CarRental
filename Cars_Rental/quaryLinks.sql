@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS employees (
     hire_date DATE NOT NULL,
     birthday DATE NOT NULL,
     salary INT NOT NULL,
+    phone INT NOT NULL,
     PRIMARY KEY(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
