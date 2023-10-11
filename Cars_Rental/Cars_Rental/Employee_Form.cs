@@ -97,6 +97,10 @@ namespace Cars_Rental
                 // TODO Dalton : Add renter to the car 
                 result = userDate.SqlQuary($"INSERT INTO client (ssn, name, phone) VALUES ({car.renter.SSN}, {car.renter.Name}, {car.renter.Phone_num}); INSERT INTO renter(payment_method, drive_licanece, received_date, due_date, clint_id, users_id) VALUES({ car.renter.payment_method}, { car.renter.Driver_licence}, NOW(), { car.renter.due_date}, (SELECT id FROM client WHERE ssn = { car.renter.SSN}), { useSession}); ");
                 result = userDate.SqlQuary($"UPDATE car SET renter_id = (SELECT id FROM renter WHERE client_id IN (SELECT id FROM client WHERE id = {car.renter.SSN})) WHERE id = {id}");
+
+                this.Close();
+                Write("\n\nEdition is done Successfully");
+                ReadKey();
             }
             else
             {
@@ -107,11 +111,67 @@ namespace Cars_Rental
         private void Edit()
         {
             //TODO Dalton : Edit from & to SQL
+            this.Close();
+            WriteLine("# Edit #\n");
+            Cars car = new Cars();
+            AccessMySql userDate = new AccessMySql();
+            List<List<string>> result = new List<List<string>>();
 
+            WriteLine("Enter ID of car you want Edit renter for it : ");
+            int id = 0;
+            id = editor(id);
+
+            result = userDate.SqlQuary($"SELECT * FROM renter INNER JOIN client ON renter.client_id = client.id WHERE renter.id IN (SELECT renter_id FROM car WHERE id = {id})");
+
+            if(result.Count > 0)
+            {
+                foreach (var items in result)
+                {
+                    car.renter.payment_method = items[1];
+                    car.renter.Driver_licence = Convert.ToInt32(items[2]);
+                    car.renter.due_date = items[4];
+                    car.renter.SSN = Convert.ToInt32(items[8]);
+                    car.renter.Name = items[9];
+                    car.renter.Phone_num = Convert.ToInt32(items[10]);
+
+
+                    //TODO Dark doing dynamic display
+
+
+
+
+                    result = userDate.SqlQuary($"UPDATE client SET ssn = {car.renter.SSN}, name = {car.renter.Name}, phone = {car.renter.Phone_num} WHERE ssn = {items[7]}; UPDATE renter SET payment_method = {car.renter.payment_method}, drive_licanece = {car.renter.Driver_licence}, due_date = { car.renter.due_date}, client_id = {items[7]}, users_id = {useSession} WHERE id = {items[0]}");
+
+                    this.Close();
+                    Write("\n\nEdition is done Successfully");
+                    ReadKey();
+                }
+            }else
+            {
+                WriteLine("This Car not found or there are note any renter..Press any key to back ");
+                ReadKey();
+            }
         }
         private void Delete()
         {
             //TODO Dalton : Delete from SQl
+            this.Close();
+            WriteLine("# Delete #\n");
+            Cars car = new Cars();
+            AccessMySql userDate = new AccessMySql();
+            List<List<string>> result = new List<List<string>>();
+
+            WriteLine("Enter ID of car you want Edit renter for it : ");
+            int id = 0;
+            id = editor(id);
+
+
+            result = userDate.SqlQuary($"DELETE FROM client WHERE id IN (SELECT client_id FROM renter WHERE id IN (SELECT renter_id FROM car WHERE id = {id})); DELETE FROM renter WHERE id IN (SELECT renter_id FROM car WHERE id = {id}));");
+            result = userDate.SqlQuary($"UPDATE car SET renter = NULL WHERE id = {id}");
+
+            this.Close();
+            Write("\n\nDelete is done Successfully");
+            ReadKey();
         }
         private char Press() //for choise without press enter
         {
@@ -135,9 +195,11 @@ namespace Cars_Rental
             }
             else if (key == '3')
             {
+                Edit();
             }
             else if (key == '4')
             {
+                Delete();
             }
             else
             {

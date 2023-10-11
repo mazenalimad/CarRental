@@ -17,6 +17,7 @@ namespace Cars_Rental
         public string payment_method { set; get; }
         public int Driver_licence { get; set; }
         public string due_date { get; set; }
+        public string received_date { get; set; }
         public Renter(string name=" ",int ssn=0,int phone=0,int driver_lice_num=0):base(name,ssn,phone) {
 
             Driver_licence = driver_lice_num;

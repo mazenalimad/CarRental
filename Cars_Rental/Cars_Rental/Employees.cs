@@ -8,6 +8,7 @@ namespace Cars_Rental
 {
     class Employees : Personal_Info
     {
+        public int id { set; get; }
         public Date BirthDay { set; get; }
         public Date HireDate { set; get; }
         public int Salary { set; get; }
