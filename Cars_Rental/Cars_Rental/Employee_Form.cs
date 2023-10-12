@@ -99,7 +99,9 @@ namespace Cars_Rental
                 result = userDate.SqlQuary($"UPDATE car SET renter_id = (SELECT id FROM renter WHERE client_id IN (SELECT id FROM client WHERE id = {car.renter.SSN})) WHERE id = {id}");
 
                 this.Close();
-                Write("\n\nEdition is done Successfully");
+                Write("\n\nThe Following Renter has been added successfully\n");
+                Personal_Info p = new Renter();
+                WriteLine($"{p}");
                 ReadKey();
             }
             else

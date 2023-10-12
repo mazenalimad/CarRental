@@ -76,7 +76,10 @@ namespace Cars_Rental
             result = userDate.SqlQuary($"INSERT INTO employees (name, ssn, hire_date, birthday, salary, phone) VALUE ({employee.Name}, {employee.SSN}, NOW(), {employee.BirthDay.Year}-{employee.BirthDay.Month}-{employee.BirthDay.Day}, {employee.Salary}, {employee.Phone_num})");
 
             this.Close();
-            Write("\n\nAddition is done Successfully");
+            Personal_Info p = new Employees();
+            Write("\n\nthe following info has been added successfully\n");
+            WriteLine($"{p}");
+          
             ReadKey();
         }
         private void Edit()

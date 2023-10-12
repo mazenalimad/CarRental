@@ -39,5 +39,9 @@ namespace Cars_Rental
                         
                 }
         }
+        public override string ToString()
+        {
+            return $"{base.ToString()}"+ $"{Commission_price,3} {Valid_Regstration_Papers,3}";
+        }
     }
 }

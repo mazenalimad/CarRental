@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Cars_Rental
 {
-    class Credit
+   public  class Credit
     {
-        public bool CreditNumber(long credit_card) => check_validity(credit_card);
+         public bool CreditNumber(long credit_card) => check_validity(credit_card);
 
         //Function error card
         private bool check_validity(long ccn)

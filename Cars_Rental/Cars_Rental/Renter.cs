@@ -34,6 +34,10 @@ namespace Cars_Rental
             }
             return c;
         }
-        
+        public override string ToString()
+        {
+            return$" {base.ToString()} "+ $" {Driver_licence,7} {payment_method,5} {due_date,6} " ;
+        }
+
     }
 }

@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace Cars_Rental
 {
-    class Employees : Personal_Info
+   public class Employees : Personal_Info
     {
         public int id { set; get; }
         public Date BirthDay { set; get; }
         public Date HireDate { set; get; }
         public int Salary { set; get; }
-
+        public override string ToString()
+        {
+            return $" {id,3}{base.ToString()}"+$"{BirthDay.ToString(),6} " + $"{HireDate.ToString(),6} "+ $"{Salary,5:c}" ;
+        }
     }
 }
