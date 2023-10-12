@@ -13,7 +13,7 @@ namespace Cars_Rental
     class AccessMySql
     {
         public string MySqlConnect { get; set; }
-        private string filePath = "C:\\Users\\mozal\\Desktop\\carrental\\Cars_Rental\\quaryLinks.sql";
+        private string filePath = "Cars_Rental\\quaryLinks.sql";
 
 
         public List<List<string>> MysqlAccessDatabase(string quary)
