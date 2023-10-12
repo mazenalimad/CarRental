@@ -36,7 +36,7 @@ namespace Cars_Rental
         }
         public override string ToString()
         {
-            return$" {base.ToString()} "+ $" {Driver_licence,7} {payment_method,5} {due_date,6} " ;
+            return$" {base.ToString(),10} "+ $" {Driver_licence,7} {payment_method,5} {due_date,6} " ;
         }
 
     }

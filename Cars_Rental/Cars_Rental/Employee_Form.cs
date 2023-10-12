@@ -100,7 +100,7 @@ namespace Cars_Rental
 
                 this.Close();
                 Write("\n\nThe Following Renter has been added successfully\n");
-                Personal_Info p = new Renter();
+                Personal_Info p = car.renter;
                 WriteLine($"{p}");
                 ReadKey();
             }

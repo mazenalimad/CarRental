@@ -127,7 +127,7 @@ namespace Cars_Rental
 
             this.Close();
             Write("\n\nThe Following Lessor has been added Successfully\n");
-            Personal_Info p = new Lessor();
+            Personal_Info p = car.lessor;
             WriteLine($"{p}");
             ReadKey();
 

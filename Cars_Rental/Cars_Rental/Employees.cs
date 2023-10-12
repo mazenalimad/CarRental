@@ -14,7 +14,7 @@ namespace Cars_Rental
         public int Salary { set; get; }
         public override string ToString()
         {
-            return $" {id,3}{base.ToString()}"+$"{BirthDay.ToString(),6} " + $"{HireDate.ToString(),6} "+ $"{Salary,5:c}" ;
+            return $" {id,3}{base.ToString(),10}"+$"{BirthDay.ToString(),6} " + $"{HireDate.ToString(),6} "+ $"{Salary,5:c}" ;
         }
     }
 }
