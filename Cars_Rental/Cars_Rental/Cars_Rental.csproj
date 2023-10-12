@@ -50,7 +50,7 @@
     <Compile Include="Admin.cs" />
     <Compile Include="Cars.cs" />
     <Compile Include="Cars_List.cs" />
-    <Compile Include="Credit.cs" />
+    <Compile Include="helper_functions.cs" />
     <Compile Include="Personal_Info.cs" />
     <Compile Include="Console_Print.cs" />
     <Compile Include="Date.cs" />

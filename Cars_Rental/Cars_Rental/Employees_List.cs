@@ -88,10 +88,14 @@ namespace Cars_Rental
             AccessMySql userDate = new AccessMySql();
             List<List<string>> result = new List<List<string>>();
 
-            Write("\nEnter the Car id");
+            int Year;
+            int Month;
+            int Day;
+
+            Write("\nEnter the Employee id: ");
             employee.id = editor(employee.id);
 
-            result = userDate.SqlQuary($"SELECT * FROM employees WHERE id =  {employee.id}");
+            result = userDate.SqlQuary($"SELECT id, name, ssn, DATE_FORMAT(hire_date, '%Y-%m-%d'), DATE_FORMAT(hire_date, '%Y-%m-%d'), salary, phone FROM employees WHERE id =  {employee.id}");
 
 
             foreach (var items in result)
@@ -106,9 +110,9 @@ namespace Cars_Rental
 
                 String[] strlist = str.Split(spearator);
 
-                int Year = Convert.ToInt32(strlist[0]);
-                int Month = Convert.ToInt32(strlist[1]);
-                int Day = Convert.ToInt32(strlist[2]);
+                Year = Convert.ToInt32(strlist[0]);
+                Month = Convert.ToInt32(strlist[1]);
+                Day = Convert.ToInt32(strlist[2]);
 
                 employee.BirthDay = new Date(Month, Day, Year);
 
@@ -118,7 +122,37 @@ namespace Cars_Rental
             }
 
 
-            result = userDate.SqlQuary($"UPDATE employees SET name = {employee.Name}, ssn = {employee.SSN}, birthday = {employee.BirthDay.Year}-{employee.BirthDay.Month}-{employee.BirthDay.Day}, salary = {employee.Salary}, phone = {employee.Phone_num}  WHERE id =  {employee.id}");
+            // ID set from sql last id + 1 //TODO Dalton
+            Write("\nName : " + employee.Name);
+            employee.Name = editor(employee.Name);
+
+            Write("\nSSN : " + employee.SSN);
+            employee.SSN = editor(employee.SSN);
+
+            Write("\nPhone : " + employee.Phone_num);
+            employee.Phone_num = editor(employee.Phone_num);
+
+            Write("\nBirthDay : ");
+
+            Write("\n\tYear" + employee.BirthDay.Year);
+            Year = editor(employee.BirthDay.Year);
+
+            Write("\n\tMonth" + employee.BirthDay.Month);
+            Month = editor(employee.BirthDay.Month);
+
+            Write("\n\tDay" + employee.BirthDay.Day);
+            Day = editor(employee.BirthDay.Day);
+
+            employee.BirthDay = new Date(Month, Day, Year);
+
+
+            //HireDate dirctly to sql sysdate
+
+            Write("\nSalary : " + employee.Salary);
+            employee.Salary = editor(employee.Salary);
+
+
+            result = userDate.SqlQuary($"UPDATE employees SET name = '{employee.Name}', ssn = {employee.SSN}, birthday = '{employee.BirthDay.Year}-{employee.BirthDay.Month}-{employee.BirthDay.Day}', salary = {employee.Salary}, phone = {employee.Phone_num}  WHERE id =  {employee.id}");
 
             this.Close();
             Write("\n\nEdition is done Successfully");

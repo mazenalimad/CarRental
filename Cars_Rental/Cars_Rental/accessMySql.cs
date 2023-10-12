@@ -24,24 +24,32 @@ namespace Cars_Rental
             {
                 using (MySqlConnection databseConnection = new MySqlConnection(this.MySqlConnect))
                 {
+                    List<List<string>> result = new List<List<string>>();
                     databseConnection.Open();
                     MySqlCommand conn = new MySqlCommand(quary, databseConnection);
                     //conn.Parameters.AddWithValue("@name" , name);     SQL Injection sulotion
-                    MySqlDataReader equal = conn.ExecuteReader();
+                    MySqlDataReader equal;
 
-                    
-                    List<List<string>> result = new List<List<string>>();
-
-                    if (equal.HasRows)
+                    try
                     {
-                        while (equal.Read())
+                        equal = conn.ExecuteReader();
+
+                        if (equal.HasRows)
                         {
-                            List<string> items = new List<string>();
-                            for (int i = 0; i < equal.FieldCount; i++)
-                                items.Add(equal.GetString(i));
-                            result.Add(items);
+                            while (equal.Read())
+                            {
+                                List<string> items = new List<string>();
+                                for (int i = 0; i < equal.FieldCount; i++)
+                                    items.Add(equal.GetString(i));
+                                result.Add(items);
+                            }
                         }
+
                     }
+                    catch
+                    {
+                        conn.ExecuteNonQuery();
+                    } 
                     databseConnection.Close();
                     return result;
                 }
@@ -49,8 +57,8 @@ namespace Cars_Rental
             catch
             {
                 throw new ArgumentOutOfRangeException();
+                
             }
-
         }
 
         public List<List<string>>  SqlQuary(string quary)
