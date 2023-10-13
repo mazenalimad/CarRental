@@ -79,3 +79,8 @@ CREATE TABLE IF NOT EXISTS car (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 ALTER TABLE car AUTO_INCREMENT = 1;
+
+
+INSERT IGNORE INTO employees (id, name, ssn, hire_date, birthday, salary, phone) VALUES (1, 'Admin', 2048, NOW(), '2000-01-01', 20000, 777777777);
+
+INSERT IGNORE INTO  users (id, username, hash, type, employees_id) VALUES (1, 'Admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'Admin', 1);
