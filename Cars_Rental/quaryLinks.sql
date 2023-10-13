@@ -84,3 +84,7 @@ ALTER TABLE car AUTO_INCREMENT = 1;
 INSERT IGNORE INTO employees (id, name, ssn, hire_date, birthday, salary, phone) VALUES (1, 'Admin', 2048, NOW(), '2000-01-01', 20000, 777777777);
 
 INSERT IGNORE INTO  users (id, username, hash, type, employees_id) VALUES (1, 'Admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'Admin', 1);
+
+INSERT IGNORE INTO employees (id, name, ssn, hire_date, birthday, salary, phone) VALUES (2, 'employee', 4000, NOW(), '2008-01-01', 5000, 777777777);
+
+INSERT IGNORE INTO  users (id, username, hash, type, employees_id) VALUES (2, 'employee', '2fdc0177057d3a5c6c2c0821e01f4fa8d90f9a3bb7afd82b0db526af98d68de8', 'Employees', 2);
