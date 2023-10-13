@@ -42,11 +42,12 @@ namespace Cars_Rental
         }
         private void Add()
         {
+            // Collect the date 
             this.Close();
             WriteLine("# Add #\n");
             Employees employee = new Employees();
             int Year = 0, Month = 0, Day = 0;
-            // ID set from sql last id + 1 //TODO Dalton
+            // ID set from sql last id //TODO Dalton
             Write("Name : ");
             employee.Name = ReadLine();
             Write("SSN : ");
@@ -73,8 +74,10 @@ namespace Cars_Rental
             AccessMySql userDate = new AccessMySql();
             List<List<string>> result = new List<List<string>>();
 
+            // insert the date of employees 
             result = userDate.SqlQuary($"INSERT INTO employees (name, ssn, hire_date, birthday, salary, phone) VALUE ({employee.Name}, {employee.SSN}, NOW(), {employee.BirthDay.Year}-{employee.BirthDay.Month}-{employee.BirthDay.Day}, {employee.Salary}, {employee.Phone_num})");
 
+            // the last msg with Elys part
             this.Close();
             Personal_Info p = employee;
             Write("\n\nthe following info has been added successfully\n");
@@ -98,9 +101,10 @@ namespace Cars_Rental
             Write("\nEnter the Employee id: ");
             employee.id = editor(employee.id);
 
+            // giving the date from datebase to collect it 
             result = userDate.SqlQuary($"SELECT id, name, ssn, DATE_FORMAT(hire_date, '%Y-%m-%d'), DATE_FORMAT(hire_date, '%Y-%m-%d'), salary, phone FROM employees WHERE id =  {employee.id}");
 
-
+            // collect the date in varabiles 
             foreach (var items in result)
             {
                 employee.Name = items[1];
@@ -125,7 +129,8 @@ namespace Cars_Rental
             }
 
 
-            // ID set from sql last id + 1 //TODO Dalton
+            // ID set from sql last id //TODO Dalton
+            // make dynamic msg
             Write("\nName : " + employee.Name);
             employee.Name = editor(employee.Name);
 
@@ -155,6 +160,7 @@ namespace Cars_Rental
             employee.Salary = editor(employee.Salary);
 
 
+            /// UPDATE the date of employees 
             result = userDate.SqlQuary($"UPDATE employees SET name = '{employee.Name}', ssn = {employee.SSN}, birthday = '{employee.BirthDay.Year}-{employee.BirthDay.Month}-{employee.BirthDay.Day}', salary = {employee.Salary}, phone = {employee.Phone_num}  WHERE id =  {employee.id}");
 
             this.Close();
@@ -174,6 +180,7 @@ namespace Cars_Rental
             Write("\nEnter the Car id");
             employee.id = editor(employee.id);
 
+            /// Delete the date of employees
             result = userDate.SqlQuary($"DELETE FROM employees WHERE id =  {employee.id}");
 
             this.Close();

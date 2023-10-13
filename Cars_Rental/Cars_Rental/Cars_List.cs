@@ -29,7 +29,7 @@ namespace Cars_Rental
             List<List<string>> result = new List<List<string>>();
 
 
-            result = userDate.SqlQuary($"SELECT car.id, car.Brand, car.model, car.year, car.plateNumber, car.price, car.state, c1.name as renter, c2.name as lessor FROM car INNER JOIN renter ON renter_id = renter.id INNER JOIN client c1 ON renter.client_id = c1.id INNER JOIN lessor ON lessor_id = lessor.id INNER JOIN client c2 ON lessor.client_id = c2.id");
+            result = userDate.SqlQuary($"SELECT car.id, car.Brand, car.model, car.year, car.plateNumber, car.price, car.state, COALESCE(c1.name , 'Non renter') as renter, c2.name as lessor FROM car LEFT JOIN renter ON renter_id = renter.id LEFT JOIN client c1 ON renter.client_id = c1.id INNER JOIN lessor ON lessor_id = lessor.id INNER JOIN client c2 ON lessor.client_id = c2.id;");
 
             foreach (var items in result)
             {
@@ -45,7 +45,9 @@ namespace Cars_Rental
             this.Close();
             WriteLine("# Add #\n");
             Cars car = new Cars();
-            // ID set from sql last id + 1 //TODO Dalton
+            // ID set from sql last id//TODO Dalton
+
+            // collect the date 
             Write("Brand : ");
             car.Brand = ReadLine();
             Write("Model : ");
@@ -116,15 +118,20 @@ namespace Cars_Rental
             AccessMySql userDate = new AccessMySql();
             List<List<string>> result = new List<List<string>>();
 
+            // insert the date of lessor
             result = userDate.SqlQuary($"INSERT INTO client (ssn, name, phone) VALUES ({car.lessor.SSN}, {car.lessor.Name}, {car.lessor.Phone_num}); INSERT INTO lessor (commission, registation, client_id) VALUES ({car.lessor.Commission_price}, {car.lessor.Valid_Regstration_Papers}, (SELECT id FROM client WHERE ssn = {car.lessor.SSN}));");
 
+
+            // insert the date of renter that is avalible 
             if (ChooseStatus != '1')
             {
                 result = userDate.SqlQuary($"INSERT INTO client (ssn, name, phone) VALUES ({car.renter.SSN}, {car.renter.Name}, {car.renter.Phone_num}); INSERT INTO renter(payment_method, drive_licanece, received_date, due_date, clint_id, users_id) VALUES({ car.renter.payment_method}, { car.renter.Driver_licence}, NOW(), { car.renter.due_date}, (SELECT id FROM client WHERE ssn = { car.renter.SSN}), { useSession}); ");
             }
+            // insert the date of car and check if it has a renter or not and then make the link 
             result = userDate.SqlQuary($"INSERT INTO car (brand, model, year, plateNumber, price, state, renter_id, lessor_id) VALUES ({car.Brand}, {car.Model}, {car.Year}, {car.License_plate_no}, {car.Price}, {car.Status}, (SELECT id From renter where client_id IN (SELECT id From clinet WHERE ssn = {car.renter.SSN})),  (SELECT id From lessor where client_id IN (SELECT id From clinet WHERE ssn = {car.lessor.SSN})");
 
 
+            // print the last msg with MazenElays part
             this.Close();
             Write("\n\nThe Following Lessor has been added Successfully\n");
             Personal_Info p = car.lessor;
@@ -146,6 +153,7 @@ namespace Cars_Rental
             List<List<string>> result = new List<List<string>>();
 
 
+            // giving the date from the datebase in collect it in the object varabiles 
             if ((result = userDate.SqlQuary($"SELECT id FROM car WHERE id = {car.id} AND renter_id IS NOT NULL")).Count < 1)
             {
                 result = userDate.SqlQuary($"SELECT car.Brand, car.model, car.year, car.plateNumber, car.price, car.state, lessor.commission, lessor.registation_paper, c1.ssn as 'lessor SSN', c1.name as 'lessor name', c1.phone as 'lessor phone' FROM car INNER JOIN lessor ON lessor_id = lessor.id INNER JOIN client c1 ON lessor.client_id = c1.id WHERE car.id = {car.id}");
@@ -191,18 +199,89 @@ namespace Cars_Rental
             }
 
 
-            // TODO Dark to display the options with value dynamicly 
+            // TODO Dalton to display the options with value dynamicly 
+            Write("\nBrand : " + car.Brand);
+            car.Brand = editor(car.Brand);
+
+            Write("\nModel : " + car.Model);
+            car.Model = editor(car.Model);
+
+            Write("\nYear : " + car.Year);
+            car.Year = editor(car.Year);
+
+            Write("\n License plate no : " + car.License_plate_no);
+            car.License_plate_no = editor(car.License_plate_no);
+
+            Write("\nPrice : " + car.Price);
+            car.Price = editor(car.Price);
+
+            Write("\nStatus : " + car.Status);
+            car.Status = editor(car.Status);
+
+            Write("\nLessor Name : " + car.lessor.Name);
+            car.lessor.Name = editor(car.lessor.Name);
+
+            Write("\nLessor SSN : " + car.lessor.SSN);
+            car.lessor.SSN = editor(car.lessor.SSN);
+
+            Write("\nLessor phone : " + car.lessor.Phone_num);
+            car.lessor.Phone_num = editor(car.lessor.Phone_num);
+
+            Write("\nLessor Commission : " + car.lessor.Commission_price);
+            car.lessor.Commission_price = editor(car.lessor.Commission_price);
+
+            Write("\nLessor Valid_Regstration_Papers : " + car.lessor.Valid_Regstration_Papers);
+            car.lessor.Valid_Regstration_Papers = Convert.ToBoolean(editor(result[0][11]));
+
+            // renter part
+            Write("\renter Name : " + car.renter.Name);
+            car.renter.Name = editor(car.renter.Name);
+
+            Write("\renter SSN : " + car.renter.SSN);
+            car.renter.SSN = editor(car.renter.SSN);
+
+            Write("\nrenter phone : " + car.renter.Phone_num);
+            car.renter.Phone_num = car.renter.Phone_num;
+
+            Write("\npayment method : " + car.renter.payment_method);
+            car.renter.payment_method = editor(car.renter.payment_method);
+
+            if (car.renter.payment_method == "credit card")
+            {
+                Write("\nRenter credit card number : ");
+                if (credit((long)Convert.ToDouble(ReadLine())))
+                {
+                    car.renter.payment_method = "credit card";
+                }
+            }
+            else
+            {
+                car.renter.payment_method = "Cash";
+            }
 
 
+            Write("\nDriver_licence : " + car.renter.Driver_licence);
+            car.renter.Driver_licence = editor(car.renter.Driver_licence);
 
 
+            Write("\ndue date : " + car.renter.due_date);
+            car.renter.due_date = editor(car.renter.due_date);
 
+
+            // UPDATE the date of lessor 
             result = userDate.SqlQuary($"UPDATE client SET ssn = {car.lessor.SSN}, name = {car.lessor.Name}, phone = {car.lessor.Phone_num} WHERE ssn = {car.id}; UPDATE lessor SET commission = {car.lessor.Commission_price}, registation = {car.lessor.Valid_Regstration_Papers}, client_id = (SELECT id FROM client WHERE ssn = {car.lessor.SSN});");
 
-            if ((result = userDate.SqlQuary($"SELECT id FROM car WHERE id = {car.id} AND renter_id IS NOT NULL")).Count < 1)
+            // UPDATE the date of renter 
+            if ((result = userDate.SqlQuary($"SELECT id FROM car WHERE id = {car.id} AND renter_id IS NOT NULL")).Count > 0)
             {
                 result = userDate.SqlQuary($"UPDATE clien SET ssn = {car.renter.SSN}, name = {car.renter.Name}, phone = {car.renter.Phone_num}; UPDATE renter SET payment_method = { car.renter.payment_method}, drive_licanece = { car.renter.Driver_licence}, due_date = { car.renter.due_date}, clint_id = (SELECT id FROM client WHERE ssn = { car.renter.SSN}), users_id = { useSession};");
             }
+            // INTERT the date of renter if the car has new information about renter 
+            else if ((result = userDate.SqlQuary($"SELECT id FROM car WHERE id = {car.id} AND renter_id IS NOT NULL")).Count < 1 && car.renter.Name.Length > 0 && car.renter.SSN > 0 && car.renter.Phone_num > 0)
+            {
+                result = userDate.SqlQuary($"INSERT INTO client (ssn, name, phone) VALUES ({car.renter.SSN}, {car.renter.Name}, {car.renter.Phone_num}); INSERT INTO renter(payment_method, drive_licanece, received_date, due_date, clint_id, users_id) VALUES({ car.renter.payment_method}, { car.renter.Driver_licence}, NOW(), { car.renter.due_date}, (SELECT id FROM client WHERE ssn = { car.renter.SSN}), { useSession});");
+            }
+            // UPATE the car info
             result = userDate.SqlQuary($"UPDATE car SET brand = {car.Brand}, model = {car.Model}, year = {car.Year}, plateNumber = {car.License_plate_no}, price = {car.Price}, state = {car.Status}, renter_id = (SELECT id From renter where client_id IN (SELECT id From clinet WHERE ssn = {car.renter.SSN})), lessor_id = (SELECT id From lessor where client_id IN (SELECT id From clinet WHERE ssn = {car.lessor.SSN}))");
 
             Write("\n\nEdit is done Successfully");
@@ -221,6 +300,7 @@ namespace Cars_Rental
             AccessMySql userDate = new AccessMySql();
             List<List<string>> result = new List<List<string>>();
 
+            // delete the date of cline lessor and renter and the car information
             result = userDate.SqlQuary($"DELETE FROM client WHERE id IN (SELECT client_id FROM lessor WHERE id IN (SELECT lessor_id FROM car WHERE id = {car.id})); DELETE FROM lessor WHERE id IN (SELECT lessor_id FROM car WHERE id = {car.id})); DELETE FROM client WHERE id IN (SELECT client_id FROM renter WHERE id IN (SELECT renter_id FROM car WHERE id = {car.id})); DELETE FROM renter WHERE id IN (SELECT renter_id FROM car WHERE id = {car.id})); DELETE FROM car WHERE id = {car.id}))");
           
             Write("\n\nDelete is done Successfully");
