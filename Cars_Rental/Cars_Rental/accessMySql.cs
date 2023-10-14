@@ -13,7 +13,7 @@ namespace Cars_Rental
     class AccessMySql
     {
         public string MySqlConnect { get; set; }
-        private string filePath = "Cars_Rental\\quaryLinks.sql";
+        private string filePath = "C:\\Users\\mozal\\Desktop\\carrental\\Cars_Rental\\quaryLinks.sql";
 
 
         public List<List<string>> MysqlAccessDatabase(string quary)
@@ -30,26 +30,19 @@ namespace Cars_Rental
                     //conn.Parameters.AddWithValue("@name" , name);     SQL Injection sulotion
                     MySqlDataReader equal;
 
-                    try
-                    {
-                        equal = conn.ExecuteReader();
 
-                        if (equal.HasRows)
+                    equal = conn.ExecuteReader();
+
+                    if (equal.HasRows)
+                    {
+                        while (equal.Read())
                         {
-                            while (equal.Read())
-                            {
-                                List<string> items = new List<string>();
-                                for (int i = 0; i < equal.FieldCount; i++)
-                                    items.Add(equal.GetString(i));
-                                result.Add(items);
-                            }
+                            List<string> items = new List<string>();
+                            for (int i = 0; i < equal.FieldCount; i++)
+                                items.Add(equal.GetString(i));
+                            result.Add(items);
                         }
-
                     }
-                    catch
-                    {
-                        conn.ExecuteNonQuery();
-                    } 
                     databseConnection.Close();
                     return result;
                 }
@@ -57,7 +50,7 @@ namespace Cars_Rental
             catch
             {
                 throw new ArgumentOutOfRangeException();
-                
+
             }
         }
 
@@ -93,7 +86,9 @@ namespace Cars_Rental
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("\nAccess denied: Error in trying to make connection to DataBase\n");
+                    Console.WriteLine("\nAccess denied: Error in trying to make connection to DataBase... Press any key to exit\n");
+                    Console.ReadKey();
+                    Environment.Exit(0);
                 }
 
 

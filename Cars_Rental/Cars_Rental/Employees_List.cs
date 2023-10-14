@@ -29,7 +29,7 @@ namespace Cars_Rental
             List<List<string>> result = new List<List<string>>();
 
 
-            result = userDate.SqlQuary($"SELECT * FROM employees");
+            result = userDate.SqlQuary($"SELECT id, name, ssn, DATE_FORMAT(hire_date, '%Y-%m-%d'), DATE_FORMAT(hire_date, '%Y-%m-%d'), salary, phone FROM employees");
 
             foreach (var items in result)
             {
@@ -52,30 +52,29 @@ namespace Cars_Rental
             employee.Name = ReadLine();
             Write("SSN : ");
             employee.SSN = editor(employee.SSN);
-            Write("Phone : ");
+            Write("\nPhone : ");
             employee.Phone_num = editor(employee.Phone_num);
-            Write("BirthDay : ");
-            Write("\n\tYear");
+            Write("\nBirthDay : ");
+            Write("\n\tYear: ");
             Year = editor(Year);
-            Write("\n\tMonth");
+            Write("\n\tMonth: ");
             Month = editor(Month);
-            Write("\n\tDay");
+            Write("\n\tDay: ");
             Day = editor(Day);
             employee.BirthDay = new Date(Month, Day, Year);
 
 
             //HireDate dirctly to sql sysdate
 
-            Write("Salary : ");
+            Write("\nSalary : ");
             employee.Salary = editor(employee.Salary);
 
 
             //TODO Dalton : Add to SQL 
             AccessMySql userDate = new AccessMySql();
-            List<List<string>> result = new List<List<string>>();
 
             // insert the date of employees 
-            result = userDate.SqlQuary($"INSERT INTO employees (name, ssn, hire_date, birthday, salary, phone) VALUE ({employee.Name}, {employee.SSN}, NOW(), {employee.BirthDay.Year}-{employee.BirthDay.Month}-{employee.BirthDay.Day}, {employee.Salary}, {employee.Phone_num})");
+            userDate.SqlQuary($"INSERT INTO employees (name, ssn, hire_date, birthday, salary, phone) VALUE ('{employee.Name}', {employee.SSN}, NOW(), '{employee.BirthDay.Year}-{employee.BirthDay.Month}-{employee.BirthDay.Day}', {employee.Salary}, {employee.Phone_num})");
 
             // the last msg with Elys part
             this.Close();
@@ -104,68 +103,77 @@ namespace Cars_Rental
             // giving the date from datebase to collect it 
             result = userDate.SqlQuary($"SELECT id, name, ssn, DATE_FORMAT(hire_date, '%Y-%m-%d'), DATE_FORMAT(hire_date, '%Y-%m-%d'), salary, phone FROM employees WHERE id =  {employee.id}");
 
-            // collect the date in varabiles 
-            foreach (var items in result)
+            if (result.Count > 0)
             {
-                employee.Name = items[1];
-                employee.SSN = Convert.ToInt32(items[2]);
+                // collect the date in varabiles 
+                foreach (var items in result)
+                {
+                    employee.Name = items[1];
+                    employee.SSN = Convert.ToInt32(items[2]);
 
 
-                // date format
-                string str = items[4];
-                char[] spearator = { '-' };
+                    // date format
+                    string str = items[4];
+                    char[] spearator = { '-' };
 
-                String[] strlist = str.Split(spearator);
+                    String[] strlist = str.Split(spearator);
 
-                Year = Convert.ToInt32(strlist[0]);
-                Month = Convert.ToInt32(strlist[1]);
-                Day = Convert.ToInt32(strlist[2]);
+                    Year = Convert.ToInt32(strlist[0]);
+                    Month = Convert.ToInt32(strlist[1]);
+                    Day = Convert.ToInt32(strlist[2]);
+
+                    employee.BirthDay = new Date(Month, Day, Year);
+
+
+                    employee.Salary = Convert.ToInt32(items[5]);
+                    employee.Phone_num = Convert.ToInt32(items[6]);
+                }
+
+
+                // ID set from sql last id //TODO Dalton
+                // make dynamic msg
+                Write("\nName : " + employee.Name);
+                employee.Name = editor(employee.Name);
+
+                Write("\nSSN : " + employee.SSN);
+                employee.SSN = editor(employee.SSN);
+
+                Write("\nPhone : " + employee.Phone_num);
+                employee.Phone_num = editor(employee.Phone_num);
+
+                Write("\nBirthDay : ");
+
+                Write("\n\tYear" + employee.BirthDay.Year);
+                Year = editor(employee.BirthDay.Year);
+
+                Write("\n\tMonth" + employee.BirthDay.Month);
+                Month = editor(employee.BirthDay.Month);
+
+                Write("\n\tDay" + employee.BirthDay.Day);
+                Day = editor(employee.BirthDay.Day);
 
                 employee.BirthDay = new Date(Month, Day, Year);
 
 
-                employee.Salary = Convert.ToInt32(items[5]);
-                employee.Phone_num = Convert.ToInt32(items[6]);
+                //HireDate dirctly to sql sysdate
+
+                Write("\nSalary : " + employee.Salary);
+                employee.Salary = editor(employee.Salary);
+
+
+                /// UPDATE the date of employees 
+                result = userDate.SqlQuary($"UPDATE employees SET name = '{employee.Name}', ssn = {employee.SSN}, birthday = '{employee.BirthDay.Year}-{employee.BirthDay.Month}-{employee.BirthDay.Day}', salary = {employee.Salary}, phone = {employee.Phone_num}  WHERE id =  {employee.id}");
+
+                this.Close();
+                Write("\n\nEdition is done Successfully");
+                ReadKey();
             }
-
-
-            // ID set from sql last id //TODO Dalton
-            // make dynamic msg
-            Write("\nName : " + employee.Name);
-            employee.Name = editor(employee.Name);
-
-            Write("\nSSN : " + employee.SSN);
-            employee.SSN = editor(employee.SSN);
-
-            Write("\nPhone : " + employee.Phone_num);
-            employee.Phone_num = editor(employee.Phone_num);
-
-            Write("\nBirthDay : ");
-
-            Write("\n\tYear" + employee.BirthDay.Year);
-            Year = editor(employee.BirthDay.Year);
-
-            Write("\n\tMonth" + employee.BirthDay.Month);
-            Month = editor(employee.BirthDay.Month);
-
-            Write("\n\tDay" + employee.BirthDay.Day);
-            Day = editor(employee.BirthDay.Day);
-
-            employee.BirthDay = new Date(Month, Day, Year);
-
-
-            //HireDate dirctly to sql sysdate
-
-            Write("\nSalary : " + employee.Salary);
-            employee.Salary = editor(employee.Salary);
-
-
-            /// UPDATE the date of employees 
-            result = userDate.SqlQuary($"UPDATE employees SET name = '{employee.Name}', ssn = {employee.SSN}, birthday = '{employee.BirthDay.Year}-{employee.BirthDay.Month}-{employee.BirthDay.Day}', salary = {employee.Salary}, phone = {employee.Phone_num}  WHERE id =  {employee.id}");
-
-            this.Close();
-            Write("\n\nEdition is done Successfully");
-            ReadKey();
+            else
+            {
+                this.Close();
+                WriteLine("\n\nThis Employee not found..Press any key to back ");
+                ReadKey();
+            }
 
         }
         private void Delete()
@@ -177,15 +185,26 @@ namespace Cars_Rental
             AccessMySql userDate = new AccessMySql();
             List<List<string>> result = new List<List<string>>();
 
-            Write("\nEnter the Car id");
+            Write("\nEnter the Employee id: ");
             employee.id = editor(employee.id);
 
-            /// Delete the date of employees
-            result = userDate.SqlQuary($"DELETE FROM employees WHERE id =  {employee.id}");
+            result = userDate.SqlQuary($"SELECT id FROM employees WHERE id = {employee.id}");
+            if (result.Count > 0)
+            {
 
-            this.Close();
-            Write("\n\nDelete is done Successfully");
-            ReadKey();
+                /// Delete the date of employees
+                result = userDate.SqlQuary($"DELETE FROM employees WHERE id =  {employee.id}");
+
+                this.Close();
+                Write("\n\nDelete is done Successfully");
+                ReadKey();
+            }
+            else
+            {
+                this.Close();
+                WriteLine("\n\nThis Employee not found..Press any key to back ");
+                ReadKey();
+            }
         }
         private char Press() //for choise without press enter
         {

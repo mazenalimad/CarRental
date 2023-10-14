@@ -49,69 +49,88 @@ namespace Cars_Rental
             AccessMySql userDate = new AccessMySql();
             List<List<string>> result = new List<List<string>>();
 
-            WriteLine("Enter ID of car you want add renter for it : ");
-            int id = 0;
-            id = editor(id);
+            Write("Enter ID of car you want add renter for it : ");
+            car.id = editor(car.id);
 
-            result = userDate.SqlQuary($"SELECT state FROM car WHERE id = {id}");
+            result = userDate.SqlQuary($"SELECT state FROM car WHERE id = {car.id}");
 
-            car.Status = result[0][0];
-
-            if (car.Status == "Available") // here just example how it works
+            if (result.Count > 0)
             {
-                Write("\nRenter Name : ");
-                car.renter.Name = ReadLine(); ;
+                car.Status = result[0][0];
 
-                Write("\nRenter SSN : ");
-                car.renter.SSN = editor(car.renter.SSN);
-
-                Write("\nRenter Phone : ");
-                car.renter.Phone_num = editor(car.renter.Phone_num);
-
-                if (car.renter.GetPayment_meth() == 2)
+                if (car.Status == "Available") // here just example how it works
                 {
-                    Write("\nRenter credit card number : ");
-                    if (credit((long)Convert.ToDouble(ReadLine())))
+                    Write("\nRenter Name : ");
+                    car.renter.Name = ReadLine(); ;
+
+                    Write("Renter SSN : ");
+                    car.renter.SSN = editor(car.renter.SSN);
+
+                    Write("\nRenter Phone : ");
+                    car.renter.Phone_num = editor(car.renter.Phone_num);
+
+
+                    if (car.renter.GetPayment_meth() == '2')
                     {
+                        Write("\n\tRenter credit card number : ");
+                        bool CCK = credit((long)Convert.ToDouble(ReadLine()));
+                        while (!CCK)
+                        {
+                            Write("\nThe card number is invalid ...try again");
+                            Write("\n\tRenter credit card number : ");
+                            CCK = credit((long)Convert.ToDouble(ReadLine()));
+                        }
                         car.renter.payment_method = "credit card";
                     }
+                    else
+                    {
+                        car.renter.payment_method = "Cash";
+                    }
+
+                    Write("\nRenter Driver License : ");
+                    car.renter.Driver_licence = editor(car.renter.Driver_licence);
+
+
+                    int Year = 0, Month = 0, Day = 0;
+                    Write("\ndue_date : ");
+                    Write("\n\tYear: ");
+                    Year = editor(Year);
+                    Write("\n\tMonth: ");
+                    Month = editor(Month);
+                    Write("\n\tDay: ");
+                    Day = editor(Day);
+                    car.renter.due_date = new Date(Month, Day, Year);
+
+
+                  
+                    //here send every new details of renter to car
+                    car.Status = "UnAvailable";
+                    
+
+                    // TODO Dalton : Add renter to the car 
+                    // INSERT a new renter 
+                    userDate.SqlQuary($"INSERT INTO client (ssn, name, phone) VALUES ({car.renter.SSN}, '{car.renter.Name}', {car.renter.Phone_num}); INSERT INTO renter(payment_method, drive_licanese, received_date, due_date, client_id, users_id) VALUES('{car.renter.payment_method}', '{car.renter.Driver_licence}', NOW(), '{car.renter.due_date.Year}-{car.renter.due_date.Month}-{car.renter.due_date.Day}' , (SELECT id FROM client WHERE ssn = {car.renter.SSN}), {useSession});");
+                    // UPDATE the date of car renter to make releation between car and renter in the datebase Entity type
+                    userDate.SqlQuary($"UPDATE car SET renter_id = (SELECT id FROM renter WHERE client_id IN (SELECT id FROM client WHERE ssn = {car.renter.SSN})) WHERE id = {car.id}");
+
+                    this.Close();
+                    Write("\n\nThe Following Renter has been added successfully\n");
+                    Personal_Info p = car.renter;
+                    WriteLine($"{p}");
+                    ReadKey();
                 }
                 else
                 {
-                    car.renter.payment_method = "Cash";
+                    // faild msg if the car is avaible u can't add another renter
+                    this.Close(); 
+                    WriteLine("\n\nThis Car is Available delete the renter first..Press any key to back ");
+                    ReadKey();
                 }
-
-                Write("\nRenter Driver License : ");
-                car.renter.Driver_licence = editor(car.renter.Driver_licence);
-
-
-                Write("\ndue_date YYYY-MM-DD : ");
-                car.renter.due_date = ReadLine();
-
-
-                WriteLine("\nPress Enter to confirm.. Or any key to cancel ");
-                if(ReadKey(true).KeyChar == 13)
-                {
-                    //here send every new details of renter to car
-                    car.Status = "UnAvailable";
-                }
-
-                // TODO Dalton : Add renter to the car 
-                // INSERT a new renter 
-                result = userDate.SqlQuary($"INSERT INTO client (ssn, name, phone) VALUES ({car.renter.SSN}, {car.renter.Name}, {car.renter.Phone_num}); INSERT INTO renter(payment_method, drive_licanece, received_date, due_date, clint_id, users_id) VALUES({ car.renter.payment_method}, { car.renter.Driver_licence}, NOW(), { car.renter.due_date}, (SELECT id FROM client WHERE ssn = { car.renter.SSN}), { useSession}); ");
-                // UPDATE the date of car renter to make releation between car and renter in the datebase Entity type
-                result = userDate.SqlQuary($"UPDATE car SET renter_id = (SELECT id FROM renter WHERE client_id IN (SELECT id FROM client WHERE id = {car.renter.SSN})) WHERE id = {id}");
-
-                this.Close();
-                Write("\n\nThe Following Renter has been added successfully\n");
-                Personal_Info p = car.renter;
-                WriteLine($"{p}");
-                ReadKey();
-            }
-            else
+            }else
             {
-                // faild msg if the car is avaible u can't add another renter 
-                WriteLine("This Car not found..Press any key to back ");
+                // faild msg if the car is not found
+                this.Close(); 
+                WriteLine("\n\nThis Car is not found..Press any key to back ");
                 ReadKey();
             }
         }
@@ -124,63 +143,86 @@ namespace Cars_Rental
             AccessMySql userDate = new AccessMySql();
             List<List<string>> result = new List<List<string>>();
 
-            WriteLine("Enter ID of car you want Edit renter for it : ");
-            int id = 0;
-            id = editor(id);
-
+            Write("Enter ID of car you want Edit renter for it : ");
+            car.id = editor(car.id);
+            int Year = 0, Month = 0, Day = 0;
 
             // givig the date and collect it inside varabiles 
-            result = userDate.SqlQuary($"SELECT * FROM renter INNER JOIN client ON renter.client_id = client.id WHERE renter.id IN (SELECT renter_id FROM car WHERE id = {id})");
+            result = userDate.SqlQuary($"SELECT renter.id, renter.payment_method, renter.drive_licanese, DATE_FORMAT(renter.due_date, '%Y-%m-%d'), client.id ,client.SSN, client.name, client.phone  FROM renter INNER JOIN client ON renter.client_id = client.id WHERE renter.id IN (SELECT renter_id FROM car WHERE id = {car.id});");
 
             if(result.Count > 0)
             {
                 foreach (var items in result)
                 {
+                    int renterID = Convert.ToInt32(items[0]);
                     car.renter.payment_method = items[1];
                     car.renter.Driver_licence = Convert.ToInt32(items[2]);
-                    car.renter.due_date = items[4];
-                    car.renter.SSN = Convert.ToInt32(items[8]);
-                    car.renter.Name = items[9];
-                    car.renter.Phone_num = Convert.ToInt32(items[10]);
+
+                    string str = items[3];
+                    char[] spearator = { '-' };
+
+                    String[] strlist = str.Split(spearator);
+
+                    Year = Convert.ToInt32(strlist[0]);
+                    Month = Convert.ToInt32(strlist[1]);
+                    Day = Convert.ToInt32(strlist[2]);
+
+                    car.renter.due_date = new Date(Month, Day, Year);
+
+                    int clientID = Convert.ToInt32(items[4]);
+                    car.renter.SSN = Convert.ToInt32(items[5]);
+                    car.renter.Name = items[6];
+                    car.renter.Phone_num = Convert.ToInt32(items[7]);
 
 
                     //TODO dalton doing dynamic display
                     // renter part
-                    Write("\renter Name : " + car.renter.Name);
+                    Write("\nrenter Name : " + car.renter.Name);
                     car.renter.Name = editor(car.renter.Name);
 
-                    Write("\renter SSN : " + car.renter.SSN);
+                    Write("\nrenter SSN : " + car.renter.SSN);
                     car.renter.SSN = editor(car.renter.SSN);
 
                     Write("\nrenter phone : " + car.renter.Phone_num);
-                    car.renter.Phone_num = car.renter.Phone_num;
+                    car.renter.Phone_num = editor(car.renter.Phone_num);
 
                     Write("\npayment method : " + car.renter.payment_method);
-                    car.renter.payment_method = editor(car.renter.payment_method);
-
-                    if (car.renter.payment_method == "credit card")
+                    if (car.renter.GetPayment_meth() == '2')
                     {
-                        Write("\nRenter credit card number : ");
-                        if (credit((long)Convert.ToDouble(ReadLine())))
+                        Write("\n\tRenter credit card number : ");
+                        bool CCK = credit((long)Convert.ToDouble(ReadLine()));
+                        while (!CCK)
                         {
-                            car.renter.payment_method = "credit card";
+                            // 4003600000000014
+                            Write("\nThe card number is invalid ...try again");
+                            Write("\n\tRenter credit card number : ");
+                            CCK = credit((long)Convert.ToDouble(ReadLine()));
                         }
+                        car.renter.payment_method = "credit card";
                     }
                     else
                     {
                         car.renter.payment_method = "Cash";
                     }
 
-
                     Write("\nDriver_licence : " + car.renter.Driver_licence);
                     car.renter.Driver_licence = editor(car.renter.Driver_licence);
 
 
-                    Write("\ndue date : " + car.renter.due_date);
-                    car.renter.due_date = editor(car.renter.due_date);
+                    Write("\ndue date : ");
+                    Write("\n\tYear" + car.renter.due_date.Year);
+                    Year = editor(car.renter.due_date.Year);
+
+                    Write("\n\tMonth" + car.renter.due_date.Month);
+                    Month = editor(car.renter.due_date.Month);
+
+                    Write("\n\tDay" + car.renter.due_date.Day);
+                    Day = editor(car.renter.due_date.Day);
+
+                    car.renter.due_date = new Date(Month, Day, Year);
 
                     // UPDATE the date of renter 
-                    result = userDate.SqlQuary($"UPDATE client SET ssn = {car.renter.SSN}, name = {car.renter.Name}, phone = {car.renter.Phone_num} WHERE ssn = {items[7]}; UPDATE renter SET payment_method = {car.renter.payment_method}, drive_licanece = {car.renter.Driver_licence}, due_date = { car.renter.due_date}, client_id = {items[7]}, users_id = {useSession} WHERE id = {items[0]}");
+                    userDate.SqlQuary($"UPDATE client SET ssn = {car.renter.SSN}, name = '{car.renter.Name}', phone = {car.renter.Phone_num} WHERE id = {clientID}; UPDATE renter SET payment_method = '{car.renter.payment_method}', drive_licanese = '{car.renter.Driver_licence}', due_date = '{car.renter.due_date.Year}-{car.renter.due_date.Month}-{car.renter.due_date.Day}', users_id = {useSession} WHERE id = {renterID}");
 
                     this.Close();
                     Write("\n\nEdition is done Successfully");
@@ -203,17 +245,36 @@ namespace Cars_Rental
             AccessMySql userDate = new AccessMySql();
             List<List<string>> result = new List<List<string>>();
 
-            WriteLine("Enter ID of car you want Edit renter for it : ");
-            int id = 0;
-            id = editor(id);
+            Write("Enter ID of car you want Edit renter for it : ");
+            car.id = editor(car.id);
 
-            // DELETE the date of renter and UPDATE the releation between renter and car Entity type
-            result = userDate.SqlQuary($"DELETE FROM client WHERE id IN (SELECT client_id FROM renter WHERE id IN (SELECT renter_id FROM car WHERE id = {id})); DELETE FROM renter WHERE id IN (SELECT renter_id FROM car WHERE id = {id}));");
-            result = userDate.SqlQuary($"UPDATE car SET renter = NULL, state = 'unavalible'  WHERE id = {id}");
+            result = userDate.SqlQuary($"SELECT state FROM car WHERE id = {car.id}");
 
-            this.Close();
-            Write("\n\nDelete is done Successfully");
-            ReadKey();
+            if (result.Count > 0)
+            {
+                if (result[0][0] != "Available")
+                {
+                    // DELETE the date of renter and UPDATE the releation between renter and car Entity type
+                    userDate.SqlQuary($"UPDATE car SET renter_id = NULL, state = 'Available'  WHERE id = {car.id}; DELETE FROM renter WHERE id IN (SELECT renter_id FROM car WHERE id = {car.id}); DELETE FROM client WHERE id IN (SELECT client_id FROM renter WHERE id IN (SELECT renter_id FROM car WHERE id = {car.id}));");
+
+                    this.Close();
+                    Write("\n\nDelete is done Successfully");
+                    ReadKey();
+                }
+                else
+                {
+                    this.Close();
+                    WriteLine("\n\nThis Car already Availble..Press any key to back ");
+                    ReadKey();
+                }
+            }
+            else
+            {
+                // faild msg that the car has'not renter to update the date 
+                this.Close();
+                WriteLine("\n\nThis Car not found or there are note any renter..Press any key to back ");
+                ReadKey();
+            }
         }
         private char Press() //for choise without press enter
         {

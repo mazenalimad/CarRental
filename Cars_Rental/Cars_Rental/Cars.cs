@@ -12,7 +12,7 @@ namespace Cars_Rental
         public string Model { set; get; }
         public int Year { set; get; }
         public int Price { set; get; }
-        public int License_plate_no { set; get; }
+        public string License_plate_no { set; get; }
         public Lessor lessor { set; get; }
         public Renter renter { set; get; }
         public string Status { set; get; } = "Available";

@@ -11,8 +11,8 @@ namespace Cars_Rental
     public class Lessor:Personal_Info
     {
         private double commission_price=0.01;
-        private bool valid_regstration_papers;
-        public bool Valid_Regstration_Papers
+        private int valid_regstration_papers;
+        public int Valid_Regstration_Papers
         {
 
             get {
@@ -22,7 +22,7 @@ namespace Cars_Rental
                 }
             set
             {
-                if(value==false)//the condition validates regsteration_papers
+                if(value < 0)//the condition validates regsteration_papers
                 { throw new ArgumentOutOfRangeException(); }
                 valid_regstration_papers = value;
             }

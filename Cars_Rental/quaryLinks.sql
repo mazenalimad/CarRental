@@ -41,10 +41,10 @@ CREATE TABLE IF NOT EXISTS renter (
 	id INT NOT NULL UNIQUE AUTO_INCREMENT,
 	payment_method VARCHAR(50),
 	drive_licanese VARCHAR(50),
-    received_date DATE,
-    due_date DATE,
-    client_id INT,
-    users_id INT,
+    	received_date DATE,
+    	due_date DATE,
+    	client_id INT,
+    	users_id INT,
 	PRIMARY KEY(id),
 	FOREIGN KEY(client_id) REFERENCES client(id),
     FOREIGN KEY(users_id) REFERENCES users(id)
@@ -55,8 +55,8 @@ ALTER TABLE renter AUTO_INCREMENT = 1;
 CREATE TABLE IF NOT EXISTS lessor (
 	id INT NOT NULL UNIQUE AUTO_INCREMENT,
 	commission DOUBLE NOT NULL,
-	registation_paper VARCHAR(50) NOT NULL,
-    client_id INT,
+	registation_paper INT NOT NULL,
+    	client_id INT,
 	PRIMARY KEY(id),
 	FOREIGN KEY(client_id) REFERENCES client(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
