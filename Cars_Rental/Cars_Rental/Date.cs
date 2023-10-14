@@ -69,10 +69,12 @@ namespace Cars_Rental
 
          day = value;
       }
-   }
+         
+    } 
+
+        public override string ToString() => $"{Day} / {Month} / {Year} "; 
         
-   
-}
+    }
 
     
 }

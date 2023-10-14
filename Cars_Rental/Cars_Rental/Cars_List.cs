@@ -149,7 +149,9 @@ namespace Cars_Rental
             // print the last msg with MazenElays part
             this.Close();
             Write("\n\nThe Following Lessor has been added Successfully\n");
+
             Personal_Info p = car.lessor;
+            WriteLine($"{"Name",10}  {"SSN",10} {"Phone",15} {"Commission",16} {"Regesteration Papers",22}");
             WriteLine($"{p}");
             ReadKey();
 
