@@ -132,7 +132,7 @@ namespace Cars_Rental
                     }
                     catch (ArgumentOutOfRangeException)
                     {
-                        Write("\nError Date");
+                        Write("\nWrong Date");
                         test = true;
                     }
                 } while (test);

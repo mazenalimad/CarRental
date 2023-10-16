@@ -46,7 +46,7 @@ namespace Cars_Rental
             this.Close();
             WriteLine("# Add #\n");
             Employees employee = new Employees();
-            int Year = 0, Month = 0, Day = 0;
+            
             // ID set from sql last id //TODO Dalton
             Write("Name : ");
             employee.Name = ReadLine();
@@ -55,14 +55,28 @@ namespace Cars_Rental
             Write("\nPhone : ");
             employee.Phone_num = editor(employee.Phone_num);
             Write("\nBirthDay : ");
-            Write("\n\tYear: ");
-            Year = editor(Year);
-            Write("\n\tMonth: ");
-            Month = editor(Month);
-            Write("\n\tDay: ");
-            Day = editor(Day);
-            employee.BirthDay = new Date(Month, Day, Year);
+            do
+            {
+                try
+                {
+                    int Year = 0, Month = 0, Day = 0;
 
+                    Write("\n\tYear: ");
+                    Year = editor(Year);
+                    Write("\n\tMonth: ");
+                    Month = editor(Month);
+                    Write("\n\tDay: ");
+                    Day = editor(Day);
+                    employee.BirthDay = new Date(Month, Day, Year);
+                    test = false;
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    
+                    Write("\nWrong Date");
+                    test = true;
+                }
+            } while (test);
 
             //HireDate dirctly to sql sysdate
 
@@ -144,18 +158,28 @@ namespace Cars_Rental
                 employee.Phone_num = editor(employee.Phone_num);
 
                 Write("\nBirthDay : ");
+                do
+                {
+                    try {
+                        Write("\n\tYear: " + employee.BirthDay.Year);
+                        Year = editor(employee.BirthDay.Year);
 
-                Write("\n\tYear" + employee.BirthDay.Year);
-                Year = editor(employee.BirthDay.Year);
+                        Write("\n\tMonth: " + employee.BirthDay.Month);
+                        Month = editor(employee.BirthDay.Month);
 
-                Write("\n\tMonth" + employee.BirthDay.Month);
-                Month = editor(employee.BirthDay.Month);
+                        Write("\n\tDay: " + employee.BirthDay.Day);
+                        Day = editor(employee.BirthDay.Day);
 
-                Write("\n\tDay" + employee.BirthDay.Day);
-                Day = editor(employee.BirthDay.Day);
+                        employee.BirthDay = new Date(Month, Day, Year);
 
-                employee.BirthDay = new Date(Month, Day, Year);
-
+                        test = false;
+                    }catch(ArgumentOutOfRangeException)
+                    {
+                       
+                        Write("\n \tWrong Date");
+                        test = true;
+                    }
+                } while (test);
 
                 //HireDate dirctly to sql sysdate
 

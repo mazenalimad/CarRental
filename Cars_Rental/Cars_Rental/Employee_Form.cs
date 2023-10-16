@@ -91,18 +91,28 @@ namespace Cars_Rental
                     car.renter.Driver_licence = editor(car.renter.Driver_licence);
 
 
-                    int Year = 0, Month = 0, Day = 0;
+                    
                     Write("\ndue_date : ");
-                    Write("\n\tYear: ");
-                    Year = editor(Year);
-                    Write("\n\tMonth: ");
-                    Month = editor(Month);
-                    Write("\n\tDay: ");
-                    Day = editor(Day);
-                    car.renter.due_date = new Date(Month, Day, Year);
+                    do
+                    {
+                        try {
+                            int Year = 0, Month = 0, Day = 0;
+                            Write("\n\tYear: ");
+                            Year = editor(Year);
+                            Write("\n\tMonth: ");
+                            Month = editor(Month);
+                            Write("\n\tDay: ");
+                            Day = editor(Day);
+                            car.renter.due_date = new Date(Month, Day, Year);
+                            test = false;
+                        }
+                        catch(ArgumentOutOfRangeException)
+                        {
+                            Write("\nWrong date");
+                            test = true;
+                        }
+                    } while (test);
 
-
-                  
                     //here send every new details of renter to car
                     car.Status = "UnAvailable";
                     
@@ -211,13 +221,13 @@ namespace Cars_Rental
 
 
                     Write("\ndue date : ");
-                    Write("\n\tYear" + car.renter.due_date.Year);
+                    Write("\n\tYear: " + car.renter.due_date.Year);
                     Year = editor(car.renter.due_date.Year);
 
-                    Write("\n\tMonth" + car.renter.due_date.Month);
+                    Write("\n\tMonth: " + car.renter.due_date.Month);
                     Month = editor(car.renter.due_date.Month);
 
-                    Write("\n\tDay" + car.renter.due_date.Day);
+                    Write("\n\tDay: " + car.renter.due_date.Day);
                     Day = editor(car.renter.due_date.Day);
 
                     car.renter.due_date = new Date(Month, Day, Year);

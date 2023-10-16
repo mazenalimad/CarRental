@@ -10,7 +10,7 @@ namespace Cars_Rental
 {
     public class Lessor:Personal_Info
     {
-        private double commission_price=0.01;
+        private double commission_price=0.1;
         private int valid_regstration_papers;
         public int Valid_Regstration_Papers
         {
