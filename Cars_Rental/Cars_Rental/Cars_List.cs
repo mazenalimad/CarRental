@@ -415,9 +415,13 @@ namespace Cars_Rental
 
             if ((userDate.SqlQuary($"SELECT id FROM car WHERE id = {car.id}")).Count > 0)
             {
+                // Select the ssn of renter or lessor 
+                car.renter.SSN = Convert.ToInt32(userDate.SqlQuary($"SELECT ssn FROM client WHERE id IN (SELECT client_id FROM renter WHERE id IN (SELECT renter_id FROM car WHERE id= {car.id}))")[0][0]);
+                car.lessor.SSN = Convert.ToInt32(userDate.SqlQuary($"SELECT ssn FROM client WHERE id IN (SELECT client_id FROM lessor WHERE id IN (SELECT lessor_id FROM car WHERE id= {car.id}))")[0][0]);
+
 
                 // delete the date of cline lessor and renter and the car information
-                userDate.SqlQuary($"DELETE FROM car WHERE id = {car.id}; DELETE FROM lessor WHERE id IN (SELECT lessor_id FROM car WHERE id = {car.id}); DELETE FROM client WHERE id IN (SELECT client_id FROM lessor WHERE id IN (SELECT lessor_id FROM car WHERE id = {car.id})); DELETE FROM renter WHERE id IN (SELECT renter_id FROM car WHERE id = {car.id}); DELETE FROM client WHERE id IN (SELECT client_id FROM renter WHERE id IN (SELECT renter_id FROM car WHERE id = {car.id}));");
+                userDate.SqlQuary($"DELETE FROM car WHERE id = 2; DELETE FROM lessor WHERE client_id IN(SELECT id FROM client WHERE ssn = { car.lessor.SSN});DELETE FROM client WHERE ssn = { car.lessor.SSN};DELETE FROM renter WHERE client_id IN (SELECT id FROM client WHERE ssn = { car.renter.SSN}); DELETE FROM client WHERE ssn = { car.renter.SSN};");
 
                 Write("\n\nDelete is done Successfully");
                 ReadKey();
