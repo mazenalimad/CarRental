@@ -79,8 +79,11 @@ namespace Cars_Rental
                 // Backspace Should Not Work
                 else if (key != 8) //if user not use backspace to remove do this
                 {
-                    editstring += key; // add the key user pressed to password string
-                    Write(key);
+                    if (editstring.Length <= 9)
+                    {
+                        editstring += key; // add the key user pressed to password string
+                        Write(key);
+                    }
                 }
                 if (key == 8)
                 {
