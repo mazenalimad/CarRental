@@ -80,6 +80,8 @@ namespace Cars_Rental
             this.Close();
             Personal_Info p = employee;
             Write("\n\nthe following info has been added successfully\n");
+            WriteLine($"{"Name",10}  {"SSN",10} {"Phone",15} {"BirthDay",16} {"Salary",19}");
+
             WriteLine($"{p}");
           
             ReadKey();

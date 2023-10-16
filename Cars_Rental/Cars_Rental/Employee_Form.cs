@@ -115,6 +115,7 @@ namespace Cars_Rental
 
                     this.Close();
                     Write("\n\nThe Following Renter has been added successfully\n");
+                    WriteLine($"{"Name",10}  {"SSN",10} {"Phone",15} {"Driver_licence ", 17} {"Payment_method",19}");
                     Personal_Info p = car.renter;
                     WriteLine($"{p}");
                     ReadKey();

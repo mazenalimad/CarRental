@@ -116,15 +116,26 @@ namespace Cars_Rental
                 Write("\nRenter Driver License : ");
                 car.renter.Driver_licence = editor(car.renter.Driver_licence);
 
-                int Year = 0, Month = 0, Day = 0;
-                Write("\ndue_date : ");
-                Write("\n\tYear: ");
-                Year = editor(Year);
-                Write("\n\tMonth: ");
-                Month = editor(Month);
-                Write("\n\tDay: ");
-                Day = editor(Day);
-                car.renter.due_date = new Date(Month, Day, Year);
+                do
+                {
+                    try {
+                        int Year = 0, Month = 0, Day = 0;
+                        Write("\ndue_date : ");
+                        Write("\n\tYear: ");
+                        Year = editor(Year);
+                        Write("\n\tMonth: ");
+                        Month = editor(Month);
+                        Write("\n\tDay: ");
+                        Day = editor(Day);
+                        car.renter.due_date = new Date(Month, Day, Year);
+                        test = false;
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        Write("\nError Date");
+                        test = true;
+                    }
+                } while (test);
             } 
 
             //TODO Dalton : Add to SQL 
@@ -149,7 +160,9 @@ namespace Cars_Rental
             // print the last msg with MazenElays part
             this.Close();
             Write("\n\nThe Following Lessor has been added Successfully\n");
+
             Personal_Info p = car.lessor;
+            WriteLine($"{"Name",10}  {"SSN",10} {"Phone",15} {"Commission",16} {"Regesteration Papers",22}");
             WriteLine($"{p}");
             ReadKey();
 
@@ -306,18 +319,27 @@ namespace Cars_Rental
                     Write("\nDriver_licence : " + car.renter.Driver_licence);
                     car.renter.Driver_licence = editor(car.renter.Driver_licence);
 
+                    do
+                    {
+                        try {
+                            Write("\ndue date : " + car.renter.due_date);
+                            Write("\n\tYear :" + car.renter.due_date.Year);
+                            Year = editor(car.renter.due_date.Year);
 
-                    Write("\ndue date : " + car.renter.due_date);
-                    Write("\n\tYear" + car.renter.due_date.Year);
-                    Year = editor(car.renter.due_date.Year);
+                            Write("\n\tMonth :" + car.renter.due_date.Month);
+                            Month = editor(car.renter.due_date.Month);
 
-                    Write("\n\tMonth" + car.renter.due_date.Month);
-                    Month = editor(car.renter.due_date.Month);
-
-                    Write("\n\tDay" + car.renter.due_date.Day);
-                    Day = editor(car.renter.due_date.Day);
-
-                    car.renter.due_date = new Date(Month, Day, Year);
+                            Write("\n\tDay: " + car.renter.due_date.Day);
+                            Day = editor(car.renter.due_date.Day);
+                            car.renter.due_date = new Date(Month, Day, Year);
+                            test = false;
+                        }
+                        catch (ArgumentOutOfRangeException)
+                        {
+                            Write("\nError Date");
+                            test = true;
+                        }
+                    } while (test);
                 }
                 else if (ChooseStatus == '2' && car.Status == "Available")
                 {
@@ -355,17 +377,29 @@ namespace Cars_Rental
                     Write("\nRenter Driver License : ");
                     car.renter.Driver_licence = editor(car.renter.Driver_licence);
 
-                    Year = 0;
-                    Month = 0;
-                    Day = 0;
-                    Write("\ndue_date : ");
-                    Write("\n\tYear: ");
-                    Year = editor(Year);
-                    Write("\n\tMonth: ");
-                    Month = editor(Month);
-                    Write("\n\tDay: ");
-                    Day = editor(Day);
-                    car.renter.due_date = new Date(Month, Day, Year);
+                    do
+                    {
+                        try
+                        {
+                            Year = 0;
+                            Month = 0;
+                            Day = 0;
+                            Write("\ndue_date : ");
+                            Write("\n\tYear: ");
+                            Year = editor(Year);
+                            Write("\n\tMonth: ");
+                            Month = editor(Month);
+                            Write("\n\tDay: ");
+                            Day = editor(Day);
+                            car.renter.due_date = new Date(Month, Day, Year);
+                            test = false;
+                        }
+                        catch (ArgumentOutOfRangeException)
+                        {
+                            Write("\nError Date");
+                            test = true;
+                        }
+                    } while (test);
                 }
                 else
                 {

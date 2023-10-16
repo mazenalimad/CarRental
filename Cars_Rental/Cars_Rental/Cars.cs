@@ -22,6 +22,7 @@ namespace Cars_Rental
             renter = new Renter();
             lessor = new Lessor();
         }
-
+       
+        
     }
 }
