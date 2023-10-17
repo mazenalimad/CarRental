@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS car (
     year INT NOT NULL,
     plateNumber VARCHAR(20) NOT NULL,
     price INT NOT NULL,
-    state VARCHAR(10) NOT NULL,
+    state VARCHAR(15) NOT NULL,
     renter_id INT,
     lessor_id INT,
     PRIMARY KEY(id),

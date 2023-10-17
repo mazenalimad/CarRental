@@ -99,7 +99,9 @@ namespace Cars_Rental
                 if (car.renter.GetPayment_meth() == '2')
                 {
                     Write("\n\tRenter credit card number : ");
-                    bool CCK = credit((long)Convert.ToDouble(ReadLine()));
+                    long credit_num = 0;
+                    credit_num = editor(credit_num);
+                    bool CCK = credit(credit_num);
                     while (!CCK)
                     {
                         Write("\nThe card number is invalid ...try again");
@@ -455,7 +457,7 @@ namespace Cars_Rental
 
 
                 // delete the date of cline lessor and renter and the car information
-                userDate.SqlQuary($"DELETE FROM car WHERE id = 2; DELETE FROM lessor WHERE client_id IN(SELECT id FROM client WHERE ssn = { car.lessor.SSN});DELETE FROM client WHERE ssn = { car.lessor.SSN};DELETE FROM renter WHERE client_id IN (SELECT id FROM client WHERE ssn = { car.renter.SSN}); DELETE FROM client WHERE ssn = { car.renter.SSN};");
+                userDate.SqlQuary($"DELETE FROM car WHERE id = {car.id}; DELETE FROM lessor WHERE client_id IN(SELECT id FROM client WHERE ssn = { car.lessor.SSN});DELETE FROM client WHERE ssn = { car.lessor.SSN};DELETE FROM renter WHERE client_id IN (SELECT id FROM client WHERE ssn = { car.renter.SSN}); DELETE FROM client WHERE ssn = { car.renter.SSN};");
 
                 Write("\n\nDelete is done Successfully");
                 ReadKey();
