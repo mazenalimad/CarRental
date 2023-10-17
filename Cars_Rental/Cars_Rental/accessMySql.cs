@@ -10,7 +10,7 @@ using System.Security.Cryptography;
 namespace Cars_Rental
 {
 
-    class AccessMySql
+   public class AccessMySql
     {
         public string MySqlConnect { get; set; }
         private string filePath = "C:\\Users\\mozal\\Desktop\\carrental\\Cars_Rental\\quaryLinks.sql";

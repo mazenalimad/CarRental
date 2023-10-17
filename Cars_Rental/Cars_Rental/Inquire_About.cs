@@ -24,11 +24,12 @@ namespace Cars_Rental
 
 
             result = userDate.SqlQuary($"SELECT id, brand, model, year, state from car");
-
+            var c = String.Format("{0,15}{1,15}{2,15}{3,15}{4,15}\n\n","id", "brand", "model", "year", "state");
+            WriteLine(c);
             foreach (var items in result)
             {
                 foreach (var item in items)
-                    Console.Write($"{item}\t");
+                    Console.Write("{0,15}",item);
                 Console.Write("\n");
             }
 

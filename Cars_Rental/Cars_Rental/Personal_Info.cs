@@ -19,7 +19,7 @@ namespace Cars_Rental
             SSN = ssn;
             Phone_num = phone;
         }
-        public override string ToString()=>$"{Name,10} {SSN,13}{Phone_num,14} ";
+        public override string ToString()=>$"{Name,-10} {SSN,10}{Phone_num,13} ";
         
 
     }

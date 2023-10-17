@@ -29,11 +29,11 @@ namespace Cars_Rental
 
 
             result = userDate.SqlQuary($"SELECT car.id, car.Brand, car.model, car.year, car.plateNumber, car.price, car.state, COALESCE(c1.name , 'Non renter') as renter, c2.name as lessor FROM car LEFT JOIN renter ON renter_id = renter.id LEFT JOIN client c1 ON renter.client_id = c1.id INNER JOIN lessor ON lessor_id = lessor.id INNER JOIN client c2 ON lessor.client_id = c2.id;");
-
+            WriteLine("{0,15}{1,15}{2,15}{3,15}{4,15}{5,15}{6,15}{7.15}\n\n", "id", "Brand", "model", "year", "plateNumber", "price", "state","renter");
             foreach (var items in result)
             {
                 foreach (var item in items)
-                    Write($"{item}\t");
+                    Write("{0,15}",item);
                 Write("\n");
             }
             WriteLine("\n\n\nPress any key to go back");

@@ -8,7 +8,7 @@ using static System.Console;
 
 namespace Cars_Rental
 {
-    class Login : Console_Print
+   public class Login : Console_Print
     {
         private void Print() //the label what we want to print in console
         {
@@ -54,7 +54,7 @@ namespace Cars_Rental
             }
             else
             {
-                Console.WriteLine("\n\nLogin Failed: your username or Email is wrong ...\nPress any key to retry");
+                Console.WriteLine("\n\nLogin Failed: your username or Password is wrong ...\nPress any key to retry");
                 ReadKey();
             }
         }

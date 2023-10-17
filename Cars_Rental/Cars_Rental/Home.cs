@@ -43,7 +43,9 @@ namespace Cars_Rental
             }
             else
             {
+                Environment.Exit(0);
                 reload = false; //exit from application
+               
             }
         }
 

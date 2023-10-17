@@ -10,7 +10,14 @@ namespace Cars_Rental
     {
         public int id { set; get; }
         public string Model { set; get; }
-        public int Year { set; get; }
+        private int year;
+        public int Year {
+            set { if (value < 2005 || value > 2023)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+            get { return year; } }
         public int Price { set; get; }
         public string License_plate_no { set; get; }
         public Lessor lessor { set; get; }

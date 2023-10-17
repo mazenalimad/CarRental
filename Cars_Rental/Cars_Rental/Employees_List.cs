@@ -29,12 +29,14 @@ namespace Cars_Rental
             List<List<string>> result = new List<List<string>>();
 
 
-            result = userDate.SqlQuary($"SELECT id, name, ssn, DATE_FORMAT(hire_date, '%Y-%m-%d'), DATE_FORMAT(hire_date, '%Y-%m-%d'), salary, phone FROM employees");
-
+            result = userDate.SqlQuary( $"SELECT id, name, ssn, DATE_FORMAT(hire_date, '%Y-%m-%d'), DATE_FORMAT(hire_date, '%Y-%m-%d'), salary, phone FROM employees");
+            var c = String.Format("{0,15}{1,15}{2,15}{3,15}{4,15}{5,15}{6,15}\n\n", "id", "name", "ssn", "Birth_date", "SALARY","PHONE");
+            WriteLine(c);
             foreach (var items in result)
             {
+                
                 foreach (var item in items)
-                    Write($"{item}\t");
+                    Write("{0,15}",item);
                 Write("\n");
             }
             WriteLine("\n\n\nPress any key to go back");
@@ -94,8 +96,10 @@ namespace Cars_Rental
             this.Close();
             Personal_Info p = employee;
             Write("\n\nthe following info has been added successfully\n");
-            WriteLine($"{"Name",10}  {"SSN",10} {"Phone",15} {"BirthDay",16} {"Salary",19}");
-
+            var header = String.Format(" {0,-10}{1,10}{2,13}{3,16}{4,17}\n",
+                              "Name","SSN", "Phone", "BirthDay", "Salary");
+            // WriteLine($"{"Name",10}  {"SSN",10} {"Phone",15} {"BirthDay",16} {"Salary",19}");
+            WriteLine(header);
             WriteLine($"{p}");
           
             ReadKey();

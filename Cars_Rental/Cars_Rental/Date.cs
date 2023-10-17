@@ -10,11 +10,23 @@ namespace Cars_Rental
         public class Date
 {
    private int month; 
-   private int day; 
-   public int Year { get; private set; } // auto-implemented property Year
+   private int day;
+    private int year;
+   public int Year
+        {
+            set
+            {
+                if(value<1950 || value>2023)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), value, $"{nameof(year)} must be between 1950 or 2023");
+                }
+                year = value;
+            }
+            get { return year; }   
+        } // auto-implemented property Year
 
   
-   public Date(int month, int day, int year)
+   public Date(int month=1, int day=1, int year=1950)
    {
       Month = month; // validates month
       Year = year; // could validate year
