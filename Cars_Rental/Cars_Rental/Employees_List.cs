@@ -30,8 +30,7 @@ namespace Cars_Rental
 
 
             result = userDate.SqlQuary( $"SELECT id, name, ssn, DATE_FORMAT(hire_date, '%Y-%m-%d'), DATE_FORMAT(hire_date, '%Y-%m-%d'), salary, phone FROM employees");
-            var c = String.Format("{0,15}{1,15}{2,15}{3,15}{4,15}{5,15}{6,15}\n\n", "id", "name", "ssn", "Birth_date", "SALARY","PHONE");
-            WriteLine(c);
+            WriteLine("{0,15}{1,15}{2,15}{3,15}{4,15}{5,15}\n", "ID", "Name", "SSN", "Birth_Date", "salary", "phone");
             foreach (var items in result)
             {
                 
