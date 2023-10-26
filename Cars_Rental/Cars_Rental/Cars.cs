@@ -12,10 +12,12 @@ namespace Cars_Rental
         public string Model { set; get; }
         private int year;
         public int Year {
-            set { if (value < 2005 || value > 2023)
+            set {
+                if (value < 2005 || value > 2023)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
+                year = value;
             }
             get { return year; } }
         public int Price { set; get; }

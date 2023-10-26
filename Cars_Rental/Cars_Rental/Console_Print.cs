@@ -7,8 +7,9 @@ using static System.Console;
 
 namespace Cars_Rental
 {
-    public class Console_Print
+    abstract public class Console_Print
     {
+        protected abstract char Press();
         protected char key; //key for choise
         protected bool test; //bool for if the user choise invalid can do it again
         protected bool reload = true; //for escape from stackoverflow logic error

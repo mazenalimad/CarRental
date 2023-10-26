@@ -17,7 +17,7 @@ namespace Cars_Rental
             WriteLine("2- Login");
             WriteLine("3- Exit");
         }
-        private char Press() //for choise without press enter
+        override protected char Press() //for choise without press enter
         {
             char key = Press_check();
             if (key < '1' || key > '3')

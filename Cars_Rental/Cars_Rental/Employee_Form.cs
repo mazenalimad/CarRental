@@ -28,8 +28,8 @@ namespace Cars_Rental
             List<List<string>> result = new List<List<string>>();
 
 
-            result = userDate.SqlQuary($"SELECT car.id, car.Brand, car.model, car.year, car.plateNumber, car.price, car.state, COALESCE(c1.name , 'Non renter') as renter, c2.name as lessor FROM car LEFT JOIN renter ON renter_id = renter.id LEFT JOIN client c1 ON renter.client_id = c1.id INNER JOIN lessor ON lessor_id = lessor.id INNER JOIN client c2 ON lessor.client_id = c2.id;");
-            WriteLine("{0,15}{1,15}{2,15}{3,15}{4,15}{5,15}{6,15}{7,15}{8,15}\n", "ID","Brand","Model","Year","Regestration","price","state","Renter","Lessor");
+            result = userDate.SqlQuary($"SELECT car.id, car.Brand, car.model, car.year, car.plateNumber, car.price, car.state, COALESCE(c1.name , 'Non renter') as renter FROM car LEFT JOIN renter ON renter_id = renter.id LEFT JOIN client c1 ON renter.client_id = c1.id;");
+            WriteLine("{0,15}{1,15}{2,15}{3,15}{4,15}{5,15}{6,15}{7,15}\n", "ID","Brand","Model","Year","Regestration","price","state","Renter");
             foreach (var items in result)
             {
                 foreach (var item in items)
@@ -121,7 +121,7 @@ namespace Cars_Rental
                     // INSERT a new renter 
                     userDate.SqlQuary($"INSERT INTO client (ssn, name, phone) VALUES ({car.renter.SSN}, '{car.renter.Name}', {car.renter.Phone_num}); INSERT INTO renter(payment_method, drive_licanese, received_date, due_date, client_id, users_id) VALUES('{car.renter.payment_method}', '{car.renter.Driver_licence}', NOW(), '{car.renter.due_date.Year}-{car.renter.due_date.Month}-{car.renter.due_date.Day}' , (SELECT id FROM client WHERE ssn = {car.renter.SSN}), {useSession});");
                     // UPDATE the date of car renter to make releation between car and renter in the datebase Entity type
-                    userDate.SqlQuary($"UPDATE car SET renter_id = (SELECT id FROM renter WHERE client_id IN (SELECT id FROM client WHERE ssn = {car.renter.SSN})) WHERE id = {car.id}");
+                    userDate.SqlQuary($"UPDATE car SET renter_id = (SELECT id FROM renter WHERE client_id IN (SELECT id FROM client WHERE ssn = {car.renter.SSN})), state = '{car.Status}' WHERE id = {car.id} ");
 
                     this.Close();
                     Write("\n\nThe Following Renter has been added successfully\n");
@@ -287,7 +287,7 @@ namespace Cars_Rental
                 ReadKey();
             }
         }
-        private char Press() //for choise without press enter
+        override protected char Press() //for choise without press enter
         {
             char key = Press_check();
             if (key < '1' || key > '5')

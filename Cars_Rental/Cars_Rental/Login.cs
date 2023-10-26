@@ -121,7 +121,7 @@ namespace Cars_Rental
                 }
             }
         }
-        private char Press() //for choise without press enter
+        override protected char Press() //for choise without press enter
         {
             key = Press_check(); // to check what user pressed
             return key; // then return it

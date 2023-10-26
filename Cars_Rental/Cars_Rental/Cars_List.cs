@@ -30,7 +30,7 @@ namespace Cars_Rental
 
 
             result = userDate.SqlQuary($"SELECT car.id, car.Brand, car.model, car.year, car.plateNumber, car.price, car.state, COALESCE(c1.name , 'Non renter') as renter, c2.name as lessor FROM car LEFT JOIN renter ON renter_id = renter.id LEFT JOIN client c1 ON renter.client_id = c1.id INNER JOIN lessor ON lessor_id = lessor.id INNER JOIN client c2 ON lessor.client_id = c2.id;");
-            WriteLine("{0,15}{1,15}{2,15}{3,15}{4,15}{5,15}{6,15}", "id", "Brand", "model", "year", "plateNumber", "price", "state,renter");
+            WriteLine("{0,15}{1,15}{2,15}{3,15}{4,15}{5,15}{6,15}{7,15}{8,15}\n", "id", "Brand", "model", "year", "plateNumber", "price", "state","renter","Lessor");
             foreach (var items in result)
             {
                 foreach (var item in items)
@@ -62,7 +62,8 @@ namespace Cars_Rental
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    Write("Wrong Date, enter a valid Year");
+                    Write("\b\b\b\b\b      ");
+                    Write("\rWrong Date, enter a valid ");
                     test = true;
                 }
             } while (test);
@@ -265,8 +266,21 @@ namespace Cars_Rental
                 Write("\nModel : " + car.Model);
                 car.Model = editor(car.Model);
 
-                Write("\nYear : " + car.Year);
-                car.Year = editor(car.Year);
+                do
+                {
+                    try
+                    {
+                        Write("Year : " + car.Year);
+                        car.Year = editor(car.Year);
+                        test = false;
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        Write("\b\b\b\b\b      ");
+                        Write("\rWrong Date, enter a valid ");
+                        test = true;
+                    }
+                } while (test);
 
                 Write("\nLicense plate no : " + car.License_plate_no);
                 car.License_plate_no = editor(car.License_plate_no);
@@ -461,25 +475,42 @@ namespace Cars_Rental
 
             // SQL 
             AccessMySql userDate = new AccessMySql();
+            List<List<string>> result = new List<List<string>>();
+
 
             if ((userDate.SqlQuary($"SELECT id FROM car WHERE id = {car.id}")).Count > 0)
             {
-                // Select the ssn of renter or lessor 
-                car.renter.SSN = Convert.ToInt32(userDate.SqlQuary($"SELECT ssn FROM client WHERE id IN (SELECT client_id FROM renter WHERE id IN (SELECT renter_id FROM car WHERE id= {car.id}))")[0][0]);
-                car.lessor.SSN = Convert.ToInt32(userDate.SqlQuary($"SELECT ssn FROM client WHERE id IN (SELECT client_id FROM lessor WHERE id IN (SELECT lessor_id FROM car WHERE id= {car.id}))")[0][0]);
+                result = userDate.SqlQuary($"SELECT id, brand, model, year FROM car WHERE id = {car.id}");
+                WriteLine("\n{0,15}{1,15}{2,15}{3,15}\n", "ID", "brand", "model", "year");
+                foreach (var items in result)
+                {
+
+                    foreach (var item in items)
+                        Write("{0,15}", item);
+                    Write("\n");
+                }
+                Write("Are you sure delete it press enter : ");
+                if (ReadKey(true).KeyChar == 13)
+                {
+                    result = userDate.SqlQuary($"SELECT renter_id FROM car WHERE id = {car.id} AND renter_id IS NOT NULL");
+                    // Select the ssn of renter or lessor
+                    if (result.Count > 0)
+                        car.renter.SSN = Convert.ToInt32(userDate.SqlQuary($"SELECT ssn FROM client WHERE id IN (SELECT client_id FROM renter WHERE id IN (SELECT renter_id FROM car WHERE id= {car.id}))")[0][0]);
+                    car.lessor.SSN = Convert.ToInt32(userDate.SqlQuary($"SELECT ssn FROM client WHERE id IN (SELECT client_id FROM lessor WHERE id IN (SELECT lessor_id FROM car WHERE id= {car.id}))")[0][0]);
 
 
-                // delete the date of cline lessor and renter and the car information
-                userDate.SqlQuary($"DELETE FROM car WHERE id = {car.id}; DELETE FROM lessor WHERE client_id IN(SELECT id FROM client WHERE ssn = { car.lessor.SSN});DELETE FROM client WHERE ssn = { car.lessor.SSN};DELETE FROM renter WHERE client_id IN (SELECT id FROM client WHERE ssn = { car.renter.SSN}); DELETE FROM client WHERE ssn = { car.renter.SSN};");
+                    // delete the date of cline lessor and renter and the car information
+                    userDate.SqlQuary($"DELETE FROM car WHERE id = {car.id}; DELETE FROM lessor WHERE client_id IN(SELECT id FROM client WHERE ssn = { car.lessor.SSN});DELETE FROM client WHERE ssn = { car.lessor.SSN};DELETE FROM renter WHERE client_id IN (SELECT id FROM client WHERE ssn = { car.renter.SSN}); DELETE FROM client WHERE ssn = { car.renter.SSN};");
 
-                Write("\n\nDelete is done Successfully");
-                ReadKey();
-            }
-            else
-            {
-                this.Close();
-                WriteLine("\n\nThis Car not found..Press any key to back ");
-                ReadKey();
+                    Write("\n\nDelete is done Successfully");
+                    ReadKey();
+                }
+                else
+                {
+                    this.Close();
+                    WriteLine("\n\nThis Car not found..Press any key to back ");
+                    ReadKey();
+                }
             }
         }
 
@@ -492,7 +523,7 @@ namespace Cars_Rental
         }
 
 
-        private char Press() //for choise without press enter
+        override protected char Press() //for choise without press enter
         {
             char key = Press_check();
             if (key < '1' || key > '5')

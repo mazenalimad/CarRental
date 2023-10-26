@@ -29,7 +29,7 @@ namespace Cars_Rental
             List<List<string>> result = new List<List<string>>();
 
 
-            result = userDate.SqlQuary( $"SELECT id, name, ssn, DATE_FORMAT(hire_date, '%Y-%m-%d'), DATE_FORMAT(hire_date, '%Y-%m-%d'), salary, phone FROM employees");
+            result = userDate.SqlQuary( $"SELECT id, name, ssn, DATE_FORMAT(hire_date, '%Y-%m-%d'), salary, phone FROM employees");
             WriteLine("{0,15}{1,15}{2,15}{3,15}{4,15}{5,15}\n", "ID", "Name", "SSN", "Birth_Date", "salary", "phone");
             foreach (var items in result)
             {
@@ -220,22 +220,35 @@ namespace Cars_Rental
             result = userDate.SqlQuary($"SELECT id FROM employees WHERE id = {employee.id}");
             if (result.Count > 0)
             {
+                result = userDate.SqlQuary($"SELECT id, name, ssn FROM car WHERE id = {employee.id}");
+                WriteLine("\n{0,15}{1,15}{2,15}\n", "ID", "name", "ssn");
+                foreach (var items in result)
+                {
 
-                /// Delete the date of employees
-                result = userDate.SqlQuary($"DELETE FROM employees WHERE id =  {employee.id}");
+                    foreach (var item in items)
+                        Write("{0,15}", item);
+                    Write("\n");
+                }
 
-                this.Close();
-                Write("\n\nDelete is done Successfully");
-                ReadKey();
-            }
-            else
-            {
-                this.Close();
-                WriteLine("\n\nThis Employee not found..Press any key to back ");
-                ReadKey();
+                Write("Are you sure delete it press enter : ");
+                if (ReadKey(true).KeyChar == 13)
+                {
+                    /// Delete the date of employees
+                    result = userDate.SqlQuary($"DELETE FROM employees WHERE id =  {employee.id}");
+
+                    this.Close();
+                    Write("\n\nDelete is done Successfully");
+                    ReadKey();
+                }
+                else
+                {
+                    this.Close();
+                    WriteLine("\n\nThis Employee not found..Press any key to back ");
+                    ReadKey();
+                }
             }
         }
-        private char Press() //for choise without press enter
+        override protected char Press() //for choise without press enter
         {
             char key = Press_check();
             if (key < '1' || key > '5')

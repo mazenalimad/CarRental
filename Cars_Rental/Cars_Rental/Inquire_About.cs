@@ -41,8 +41,13 @@ namespace Cars_Rental
         }
         private void Inquire_Page()
         {
-                this.Close(); this.Print(); //clear everything then print information
-                ReadKey(); //wait a user enter any key to exit from inquire page
+            this.Close(); this.Print(); //clear everything then print information //wait a user enter any key to exit from inquire page
+            this.Press();
+        }
+        protected override char Press()
+        {
+            ReadKey();
+            return ' ';
         }
     }
 }
